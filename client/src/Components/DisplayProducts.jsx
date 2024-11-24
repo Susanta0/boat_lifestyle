@@ -92,7 +92,7 @@ const productsData= [
 ]
 const DisplayProducts = () => {
   return (
-    <div className='px-10 py-6 flex items-center gap-x-1'>
+    <div className='px-10 mb:px-2 sm:px-2 md:px-10 lg:px-10 xl:px-10 2xl:px-10 pt-8 grid mb:grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-6 gap-x-1'>
         {productsData.map((items, ind)=> (
             <ProductDetails key={items.id} {...items}/>
         ))}

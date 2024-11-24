@@ -39,3 +39,7 @@ body {
   height: 2px;
   background-color: red;
 }
+
+.introvideo::-webkit-scrollbar {
+  display: none;
+}
