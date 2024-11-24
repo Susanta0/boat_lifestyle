@@ -3,7 +3,7 @@ import { TbCircleArrowRight } from "react-icons/tb";
 const ProductsNameViewAll = ({text1, text2, text3, text4}) => {
   return (
     <>
-    <div className="px-10 flex items-center justify-between h-[40.8px] mt-2 bg-white">
+    <div className="px-10 2xl:px-10 xl:px-10 lg:px-10 md:px-10 sm:px-10 mb:px-2 flex items-center justify-between h-[40.8px] mt-2 bg-white">
         <p className="text-2xl tracking-wide">
           {text1}{" "}
           <b className="font-black">
