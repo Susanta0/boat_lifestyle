@@ -7,6 +7,8 @@ import Categories from "../Components/Categories";
 import BestSeller from "../Components/BestSeller";
 import TopPicks from "../Components/TopPicks";
 import LifeStyle from "../Components/LifeStyle";
+import BestOfBoat from "../Components/BestOfBoat";
+import JoinTribe from "../Components/JoinTribe";
 
 const Home = () => {
   return (
@@ -21,6 +23,9 @@ const Home = () => {
       <TopPicks />
       <br />
       <LifeStyle />
+      <br />
+      <BestOfBoat/>
+      <JoinTribe/>
     </>
   );
 };
