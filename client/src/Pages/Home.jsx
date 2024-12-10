@@ -9,6 +9,8 @@ import TopPicks from "../Components/TopPicks";
 import LifeStyle from "../Components/LifeStyle";
 import BestOfBoat from "../Components/BestOfBoat";
 import JoinTribe from "../Components/JoinTribe";
+import Blogs from "../Components/Blogs";
+import Press from "../Components/Press";
 
 const Home = () => {
   return (
@@ -26,6 +28,10 @@ const Home = () => {
       <br />
       <BestOfBoat/>
       <JoinTribe/>
+      <br />
+      <Blogs/>
+      <br />
+      <Press/>
     </>
   );
 };
