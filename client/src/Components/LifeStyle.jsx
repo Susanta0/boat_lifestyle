@@ -44,7 +44,7 @@ const LifeStyle = () => {
     mb:grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 
     items-center gap-6'>
       {lifestyleData.map((item, ind)=> (
-        <div className='cursor-pointer flex flex-col items-center'>
+        <div key={ind} className='cursor-pointer flex flex-col items-center'>
           <img src={item.image} alt={item.title} />
           <div className='bg-[#EFF4F7] w-full text-center pb-2 rounded-xl'>
 

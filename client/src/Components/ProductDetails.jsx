@@ -25,12 +25,13 @@ const ProductDetails = ({
           <p className="text-[10px] mb:text-[7px] sm:text-[10px] font-extrabold">{specality}</p>
           <div className="px-2 h-4 flex items-center gap-x-[1.7px] bg-white rounded">
             {rating.map((item, ind) => (
-              <>
+              // i atteched div, beacause of pass the key, in feature i am face any issu that time i will remove that div tag.
+              <div key={ind}>
                 {item.star}
-                <span key={ind} className="text-[10px] mt-1">
+                <span className="text-[10px] mt-1">
                   {item.rate}
                 </span>
-              </>
+              </div>
             ))}
           </div>
         </div>

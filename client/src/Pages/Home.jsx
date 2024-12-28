@@ -11,6 +11,7 @@ import BestOfBoat from "../Components/BestOfBoat";
 import JoinTribe from "../Components/JoinTribe";
 import Blogs from "../Components/Blogs";
 import Press from "../Components/Press";
+import Footer1 from "../Components/Footer1";
 
 const Home = () => {
   return (
@@ -32,6 +33,10 @@ const Home = () => {
       <Blogs/>
       <br />
       <Press/>
+      <br />
+      <br />
+      <br />
+      <Footer1/>
     </>
   );
 };
