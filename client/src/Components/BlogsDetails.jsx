@@ -40,8 +40,8 @@ const PopularBlogs= ()=>{
     return (
         <>
         <div className='introvideo mt-5 flex justify-between gap-x-2 overflow-x-scroll w-[95%] m-auto'>
-        {popularBlogsData.map((ele)=> (
-            <div className="min-w-[355.3px] min-h-[377.45px] border rounded-lg bg-[#FAFAFA]">
+        {popularBlogsData.map((ele, ind)=> (
+            <div key={ind} className="min-w-[355.3px] min-h-[377.45px] border rounded-lg bg-[#FAFAFA]">
                 <img src={ele.image} alt={ele.title} className="rounded-tl-lg rounded-tr-lg" />
                 <div className="px-4 bg-[#FAFAFA] flex flex-col justify-center gap-y-1.5">
                     <span className="text-[#8D8E91] text-[15px] mt-1.5">{ele.date}</span>

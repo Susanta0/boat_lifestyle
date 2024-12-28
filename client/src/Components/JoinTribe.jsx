@@ -245,8 +245,8 @@ const JoinTribe = () => {
       />
 
       <div className="introvideo mt-5 flex justify-between gap-x-3 overflow-x-scroll w-[93%] m-auto">
-        {data.map((ele) => (
-          <div className="flex flex-col border rounded-lg ">
+        {data.map((ele, ind) => (
+          <div key={ind} className="flex flex-col border rounded-lg ">
             <div className="relative">
               <video
                 muted
