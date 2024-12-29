@@ -4,7 +4,7 @@ import { TfiArrowCircleRight } from "react-icons/tfi";
 let footerData = [
   {
     id: 1,
-    name:"Shop",
+    name: "Shop",
     Shop: [
       "True Wireless Earbuds",
       "Wired Headphones",
@@ -15,7 +15,7 @@ let footerData = [
   },
   {
     id: 2,
-    name:"",
+    name: "",
     "": [
       "Wireless Headphones",
       "Wireless Speakers",
@@ -26,7 +26,7 @@ let footerData = [
   },
   {
     id: 3,
-    name:"Help",
+    name: "Help",
     Help: [
       "Track Your Order",
       "Warranty & Support",
@@ -38,7 +38,7 @@ let footerData = [
   },
   {
     id: 4,
-    name:"Company",
+    name: "Company",
     Company: [
       "About boAt",
       "News",
@@ -53,8 +53,8 @@ let footerData = [
 ];
 const Footer1 = () => {
   return (
-    <div className="w-[98%] border-2 m-auto px-16 pt-16 bg-[#E7F0F5] flex gap-x-10">
-      <div>
+    <div className="mx-0.5 mt-0.5 m-auto px-16 py-16 bg-[#E7F0F5] grid grid-flow-col">
+      <div className="">
         <img
           className="w-[151px]"
           src="https://cdn.shopify.com/s/files/1/0057/8938/4802/files/boAt_logo_black_830768d4-b3b0-4bef-8d5c-494df9bd6cbc.svg?v=1732875809"
@@ -72,14 +72,17 @@ const Footer1 = () => {
           <TfiArrowCircleRight className="h-6 w-6 text-gray-400 absolute top-1/2 transform -translate-y-1/2 right-6" />
         </div>
       </div>
-      <div>
-        {footerData.map((item, ind)=>(
-            <div key={ind}>
-                <ul>
-                    {item.name}
-                
-                </ul>
-            </div>
+      <div className=" flex gap-28 ">
+        {footerData.map((item, ind) => (
+          <div key={ind}>
+              <p className="font-extrabold text-black text-xs">{item.name}</p>
+              <ul className="space-y-4 mt-6">
+                {item[item.name].map((listItem, index) => (
+                  <li key={index} className="text-xs font-thin">{listItem}</li>
+                ))}
+              </ul>
+            
+          </div>
         ))}
       </div>
     </div>

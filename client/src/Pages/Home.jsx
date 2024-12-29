@@ -11,7 +11,7 @@ import BestOfBoat from "../Components/BestOfBoat";
 import JoinTribe from "../Components/JoinTribe";
 import Blogs from "../Components/Blogs";
 import Press from "../Components/Press";
-import Footer1 from "../Components/Footer1";
+import Footer from "../Components/Footer/Footer";
 
 const Home = () => {
   return (
@@ -36,7 +36,7 @@ const Home = () => {
       <br />
       <br />
       <br />
-      <Footer1/>
+      {/* <Footer/> */}
     </>
   );
 };
