@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaRegUser } from "react-icons/fa6";
 import axios from "axios";
+import { AuthContex } from "../../Context/AuthContextProvider";
 
 const Login = () => {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
@@ -9,6 +10,9 @@ const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [showTooltip, setShowTooltip] = useState(false);
+
+  // context api
+  const { loginStatus, userLogin, userLogout } = useContext(AuthContex);
 
   // for register
   const [formData, setFormData] = useState({
@@ -43,7 +47,7 @@ const Login = () => {
 
   // Open login dialog when user clicks the icon
   const handleUserIconClick = () => {
-    if (!isLoggedIn) {
+    if (!loginStatus.isLoggedIn) {
       setIsLoginOpen(true);
     }
   };
@@ -96,33 +100,31 @@ const Login = () => {
           password: loginData.password,
         },
       });
-      console.log(response.data.token);
+
+      const userName = response.data.name || response.data.user.name;
+      const token = response.data.token;
       setIsLoginOpen(false);
-      // Set logged in state and user name
-      setIsLoggedIn(true);
-      setUserName(response.data.name || response.data.user.name);
-      // Clear login form
-      setLoginData({ email: "", password: "" });
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
+      userLogin(token, userName);
+
+       // Clear login form
+       setLoginData({ email: "", password: "" });
+       setTimeout(() => {
+         setIsLoading(false);
+       }, 1000);
     } catch (error) {
       console.error("Login failed:", error);
       // Close login dialog and open register dialog on failed login
       setIsLoginOpen(false);
       setTimeout(() => {
         setIsLoading(false);
-        setFormData({ name: "", email: loginData.email, password: "" }); // Pre-fill email
+        setFormData({ name: "", email: loginData.email, password: "" });
         setIsRegisterOpen(true);
       }, 1000);
     }
   };
 
   const handleLogout = () => {
-    // Clear user data and token
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    setUserName("");
+    userLogout();
     setShowTooltip(false);
   };
 
@@ -136,7 +138,7 @@ const Login = () => {
   const handleMouseLeave = () => {
     tooltipTimeout = setTimeout(() => {
       setShowTooltip(false);
-    }, 300); // Adjust the delay as needed
+    }, 300); 
   };
 
   return (
@@ -159,13 +161,13 @@ const Login = () => {
               onMouseLeave={handleMouseLeave}
               className="h-5 w-5 cursor-pointer"
             />
-            {isLoggedIn && showTooltip && (
+            {loginStatus.isLoggedIn && showTooltip && (
               <div
                 className="absolute z-50 top-7 right-0 bg-gray-800 text-white text-sm py-1 px-2 rounded shadow-lg whitespace-nowrap"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                <div>{userName}</div>
+                <div>{loginStatus.userName}</div>
                 <button
                   onClick={handleLogout}
                   className="mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"

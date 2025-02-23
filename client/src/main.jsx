@@ -7,10 +7,13 @@ import "@fontsource/metropolis/400.css"; // Specify weight
 import "@fontsource/metropolis/400-italic.css"; // Specify weight and style
 
 import { BrowserRouter } from "react-router-dom";
+import { AuthContextProvider } from "./Context/AuthContextProvider.jsx";
 createRoot(document.getElementById("root")).render(
   <>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <AuthContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AuthContextProvider>
   </>
 );
