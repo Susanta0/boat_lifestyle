@@ -38,7 +38,7 @@ const userController = {
 
       await user.save();
 
-      res
+      return res
         .status(201)
         .json({ message: "User registered successfully", role: userRole });
     } catch (error) {
@@ -73,6 +73,7 @@ const userController = {
       res.json({ token, name: user.name, role: user.role, email: user.email });
     } catch (error) {
       res.status(500).json({ message: error.message });
+      
     }
   },
 
