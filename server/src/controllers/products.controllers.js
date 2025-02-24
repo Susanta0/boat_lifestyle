@@ -1,3 +1,5 @@
+const { TrueWireless, Neckband, SmartWatch, Nirvana, WirelessHeadphones, WirelessSpeakers, WiredHeadphones, WiredEarphones, Soundbar, GamingHeadphones } = require("../models/products.model");
+
 const getModelByCategory = (category) => {
   const categoryToModel = {
     "True Wireless Earbuds": TrueWireless,
@@ -16,13 +18,37 @@ const getModelByCategory = (category) => {
 
 // User Controllers (Public Access)
 const productsControllers = {
+
+  // Get all products across all categories
+getAllCategoriesProducts: async (req, res) => {
+  try {
+    const productModels = [
+      TrueWireless, Neckband, SmartWatch, Nirvana,
+      WirelessHeadphones, WirelessSpeakers, WiredHeadphones,
+      WiredEarphones, Soundbar, GamingHeadphones
+    ];
+
+    // Fetch all products from all categories
+    const allProducts = await Promise.all(
+      productModels.map((model) => model.find().select("-createdBy"))
+    );
+
+    // Flatten results from all models
+    const flattenedResults = allProducts.flat();
+
+    return res.json(flattenedResults);
+  } catch (error) {
+    return res.status(500).json({ message: "Server error", error: error.message });
+  }
+},
+
   // Get all products of a specific category
   getAllProducts: async (req, res) => {
     try {
       const { category } = req.params;
       const productModel = getModelByCategory(category);
 
-      if (!ProductModel) {
+      if (!productModel) {
         return res.status(400).json({ message: "Category not found" });
       }
       const products = await productModel.find().select("-createdBy");
@@ -35,7 +61,7 @@ const productsControllers = {
   // get single product by id
   getProductById: async (req, res) => {
     try {
-      const { category, id } = req.params();
+      const { category, id } = req.params
       const productModel = getModelByCategory(category);
       if (!productModel) {
         return res.status(400).json({ message: "Invalid Category" });
@@ -54,9 +80,14 @@ const productsControllers = {
   searchProducts: async (req, res) => {
     try {
       const { query } = req.query;
-      const productModel = Object.values(getModelByCategory);
+      const productModels = [
+        TrueWireless, Neckband, SmartWatch, Nirvana,
+        WirelessHeadphones, WirelessSpeakers, WiredHeadphones,
+        WiredEarphones, Soundbar, GamingHeadphones
+      ];
+
       const searchResult = await Promise.all(
-        productModel.map((model) =>
+        productModels.map((model) =>
           model
             .find({
               $or: [
@@ -83,16 +114,16 @@ const adminProductsControllers = {
   addProduct: async (req, res) => {
     try {
       const { category } = req.params;
-      console.log(category);
       
       const productModel = getModelByCategory(category);
+      
       if (!productModel) {
         return res.status(400).json({ message: "Invalid category" });
       }
 
       const productData = {
         ...req.body,
-        createdBy: req.user.id,
+        createdBy: req.user._id,
         category,
       };
       const product = await productModel.create(productData);
@@ -103,6 +134,55 @@ const adminProductsControllers = {
         .json({ message: "Server error", error: error.message });
     }
   },
+
+   // Update product
+   updateProduct: async (req, res) => {
+    try {
+      const { category, id } = req.params;
+      const productModel = getModelByCategory(category);
+      
+      if (!productModel) {
+        return res.status(400).json({ message: 'Invalid category' });
+      }
+
+      const productData = await productModel.findByIdAndUpdate(
+        id,
+        { ...req.body },
+        { new: true, runValidators: true }
+      );
+
+      if (!productData) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+
+      res.json(productData);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  },
+
+   // Delete product
+   deleteProduct: async (req, res) => {
+    try {
+      const { category, id } = req.params;
+      
+      const productModel = getModelByCategory(category);
+      
+      if (!productModel) {
+        return res.status(400).json({ message: 'Invalid category' });
+      }
+
+      const productData = await productModel.findByIdAndDelete(id);
+      
+      if (!productData) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+
+      res.json({ message: 'Product deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  }
 };
 
 module.exports = {productsControllers, adminProductsControllers};

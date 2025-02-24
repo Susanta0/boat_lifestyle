@@ -1,0 +1,4 @@
+Db_Url= <your real database url>
+PORT = <here will port number>
+JWT_SECRET= <secret message>
+ADMIN_SECRET_CODE= <admin secret code>
