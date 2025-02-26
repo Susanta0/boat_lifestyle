@@ -59,7 +59,7 @@ const Login = () => {
       setIsLoading(true);
       const response = await axios({
         method: "POST",
-        url: "http://localhost:8080/api/users/register",
+        url: "https://boat-lifestyle-server.onrender.com/api/users/register",
         headers: { "Content-Type": "application/json" },
         data: {
           name: formData.name,
@@ -93,7 +93,7 @@ const Login = () => {
       setIsLoading(true);
       const response = await axios({
         method: "POST",
-        url: "http://localhost:8080/api/users/login",
+        url: "https://boat-lifestyle-server.onrender.com/api/users/login",
         headers: { "Content-Type": "application/json" },
         data: {
           email: loginData.email,

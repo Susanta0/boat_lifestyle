@@ -48,6 +48,10 @@ const baseProductSchema = {
     min: 0,
     max: 100,
   },
+  stock:{
+    type: Number,
+    required: true,
+  },
   category: {
     type: String,
     required: true,
