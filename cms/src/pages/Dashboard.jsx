@@ -1,21 +1,23 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
 import UserList from "../components/users/userList";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ProductList from "../components/products/ProductList";
+import ProductsCategory from "../components/products/ProductsCategory";
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState("users");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { loginStatus, userLogout } = useContext(AuthContext);
-const navigate=useNavigate()
+  const navigate = useNavigate();
   const handleLogout = () => {
     userLogout();
     setIsMenuOpen(false);
-  }
+  };
 
-  const userDetailsNavigate=()=>{
-    return navigate('/userdetails')
-  }
+  const userDetailsNavigate = () => {
+    return navigate("/userdetails");
+  };
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -118,7 +120,10 @@ const navigate=useNavigate()
                     <p className="px-4 py-2 text-gray-800 text-sm font-semibold">
                       {loginStatus.userName}
                     </p>
-                    <button onClick={userDetailsNavigate} className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200">
+                    <button
+                      onClick={userDetailsNavigate}
+                      className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200"
+                    >
                       Profile Details
                     </button>
                     <button
@@ -142,45 +147,17 @@ const navigate=useNavigate()
               <UserList />
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow p-4">
-              <h3 className="font-semibold text-lg mb-4">Products List</h3>
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Product
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Price
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Stock
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">Product A</td>
-                    <td className="px-6 py-4 whitespace-nowrap">$99.99</td>
-                    <td className="px-6 py-4 whitespace-nowrap">250</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-blue-600">
-                      Edit
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">Product B</td>
-                    <td className="px-6 py-4 whitespace-nowrap">$149.99</td>
-                    <td className="px-6 py-4 whitespace-nowrap">124</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-blue-600">
-                      Edit
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <>
+              <h3 className="font-semibold text-lg mb-4">Product Categories</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <ProductsCategory />
+              </div>
+              <br />
+              <div className="bg-white rounded-lg shadow p-4">
+                <h3 className="font-semibold text-lg mb-4">Products List</h3>
+                <ProductList />
+              </div>
+            </>
           )}
         </main>
       </div>

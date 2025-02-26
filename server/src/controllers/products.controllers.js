@@ -19,31 +19,53 @@ const getModelByCategory = (category) => {
 // User Controllers (Public Access)
 const productsControllers = {
 
+  // Get all product categories
+  getAllCategories: async (req, res) => {
+    try {
+      const categories = [
+        "True Wireless Earbuds",
+        "Neckbands",
+        "Smart Watches",
+        "Nirvana",
+        "Wireless Headphones",
+        "Wireless Speakers",
+        "Wired Headphones",
+        "Wired Earphones",
+        "Soundbars",
+        "Gaming Headphones",
+      ];
+      
+      return res.json(categories);
+    } catch (error) {
+      return res.status(500).json({ message: "Server error", error: error.message });
+    }
+  },
+
   // Get all products across all categories
-getAllCategoriesProducts: async (req, res) => {
-  try {
-    const productModels = [
-      TrueWireless, Neckband, SmartWatch, Nirvana,
-      WirelessHeadphones, WirelessSpeakers, WiredHeadphones,
-      WiredEarphones, Soundbar, GamingHeadphones
-    ];
+  getAllCategoriesProducts: async (req, res) => {
+    try {
+      const productModels = [
+        TrueWireless, Neckband, SmartWatch, Nirvana,
+        WirelessHeadphones, WirelessSpeakers, WiredHeadphones,
+        WiredEarphones, Soundbar, GamingHeadphones
+      ];
 
-    // Fetch all products from all categories
-    const allProducts = await Promise.all(
-      productModels.map((model) => model.find().select("-createdBy"))
-    );
+      // Fetch all products from all categories
+      const allProducts = await Promise.all(
+        productModels.map((model) => model.find().select("-createdBy"))
+      );
 
-    // Flatten results from all models
-    const flattenedResults = allProducts.flat();
+      // Flatten results from all models
+      const flattenedResults = allProducts.flat();
 
-    return res.json(flattenedResults);
-  } catch (error) {
-    return res.status(500).json({ message: "Server error", error: error.message });
-  }
-},
+      return res.json(flattenedResults);
+    } catch (error) {
+      return res.status(500).json({ message: "Server error", error: error.message });
+    }
+  },
 
   // Get all products of a specific category
-  getAllProducts: async (req, res) => {
+  getProductsByCategory: async (req, res) => {
     try {
       const { category } = req.params;
       const productModel = getModelByCategory(category);
@@ -106,7 +128,10 @@ getAllCategoriesProducts: async (req, res) => {
         .json({ message: "Server error", error: error.message });
     }
   },
+
 };
+
+
 
 // Admin Controllers (Protected Routes)
 const adminProductsControllers = {
@@ -136,7 +161,7 @@ const adminProductsControllers = {
   },
 
    // Update product
-   updateProduct: async (req, res) => {
+  updateProduct: async (req, res) => {
     try {
       const { category, id } = req.params;
       const productModel = getModelByCategory(category);
@@ -162,7 +187,7 @@ const adminProductsControllers = {
   },
 
    // Delete product
-   deleteProduct: async (req, res) => {
+  deleteProduct: async (req, res) => {
     try {
       const { category, id } = req.params;
       
@@ -183,6 +208,7 @@ const adminProductsControllers = {
       res.status(500).json({ message: 'Server error', error: error.message });
     }
   }
+  
 };
 
 module.exports = {productsControllers, adminProductsControllers};

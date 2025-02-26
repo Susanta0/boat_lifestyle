@@ -17,7 +17,6 @@ const UserDetails = () => {
                     Authorization: `Bearer ${loginStatus.token}`
                 }
             })
-            console.log(response.data);
             setUser(response.data)
             setLoading(false)
             
