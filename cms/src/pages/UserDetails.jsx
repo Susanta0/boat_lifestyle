@@ -11,7 +11,7 @@ const UserDetails = () => {
             setLoading(true)
             const response = await axios({
                 method: 'get',
-                url: 'http://localhost:8080/api/users/profile',
+                url: 'https://boat-lifestyle-server.onrender.com/api/users/profile',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${loginStatus.token}`

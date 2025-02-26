@@ -46,6 +46,7 @@ const UserList = () => {
     }
   }
 
+
   return (
     <>
       {loading ? (
@@ -87,7 +88,7 @@ const UserList = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-blue-600">
                   Edit
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-red-600">
+                <td onClick={deleteUser} className="px-6 py-4 whitespace-nowrap text-red-600">
                   Delete
                 </td>
               </tr>
