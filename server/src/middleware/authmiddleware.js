@@ -15,6 +15,7 @@ const protect = async (req, res, next) => {
             return res.status(401).json({ message: 'User not found' });
         }
         req.user = user;
+        req.userId = user._id; 
         next();
     } catch (error) {
         res.status(401).json({ message: "Invalid token" });

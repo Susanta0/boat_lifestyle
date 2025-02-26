@@ -1,15 +1,20 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
-
+import UserList from "../components/users/userList";
+import { Navigate, useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState("users");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { loginStatus, userLogout } = useContext(AuthContext);
-
+const navigate=useNavigate()
   const handleLogout = () => {
     userLogout();
     setIsMenuOpen(false);
+  }
+
+  const userDetailsNavigate=()=>{
+    return navigate('/userdetails')
   }
 
   return (
@@ -113,7 +118,7 @@ const Dashboard = () => {
                     <p className="px-4 py-2 text-gray-800 text-sm font-semibold">
                       {loginStatus.userName}
                     </p>
-                    <button className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200">
+                    <button onClick={userDetailsNavigate} className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200">
                       Profile Details
                     </button>
                     <button
@@ -134,46 +139,7 @@ const Dashboard = () => {
           {activeSection === "users" ? (
             <div className="bg-white rounded-lg shadow p-4">
               <h3 className="font-semibold text-lg mb-4">Users List</h3>
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Name
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Role
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">John Doe</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      john@example.com
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">User</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-blue-600">
-                      Edit
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">Jane Smith</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      jane@example.com
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">Admin</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-blue-600">
-                      Edit
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <UserList />
             </div>
           ) : (
             <div className="bg-white rounded-lg shadow p-4">

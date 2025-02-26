@@ -27,16 +27,15 @@ const Login = () => {
     password: "",
   });
 
-  // Use useEffect to show login dialog when component mounts
   useEffect(() => {
-    // Check if user is not already logged in before showing login dialog
+  
     if (!loginStatus.isLoggedIn) {
       setIsLoginOpen(true);
     } else {
-      // If user is already logged in, navigate to home/dashboard
-      navigate('/dashboard'); // Change to your desired route
+      
+      navigate('/dashboard'); 
     }
-  }, [loginStatus.isLoggedIn, navigate]); // Dependencies include loginStatus and navigate
+  }, [loginStatus.isLoggedIn, navigate]); 
 
   // state change for register
   const handleInputChange = (e) => {
@@ -55,13 +54,6 @@ const Login = () => {
       [name]: value,
     }));
   };
-
-  // Open login dialog when user clicks the icon
-//   const handleUserIconClick = () => {
-//     if (!loginStatus.isLoggedIn) {
-//       setIsLoginOpen(true);
-//     }
-//   };
 
   // register data submit
   const handleRegisterSubmit = async (e) => {
@@ -138,24 +130,6 @@ const Login = () => {
       }, 1000);
     }
   };
-
-  // const handleLogout = () => {
-  //   userLogout();
-  //   setShowTooltip(false);
-  // };
-
-  // let tooltipTimeout;
-
-  // const handleMouseEnter = () => {
-  //   clearTimeout(tooltipTimeout);
-  //   setShowTooltip(true);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   tooltipTimeout = setTimeout(() => {
-  //     setShowTooltip(false);
-  //   }, 300); 
-  // };
 
   return (
     <>
