@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
+import IsLoading from "../components/IsLoading";
 const Login = () => {
   const navigate = useNavigate();
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
@@ -134,14 +135,7 @@ const Login = () => {
   return (
     <>
      {isLoading ? (
-        <div className="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center p-4 z-50">
-          <div className="flex flex-col items-center space-y-4">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0057/8938/4802/files/final-loader.gif?v=1670845994"
-              alt="boat-gif"
-            />
-          </div>
-        </div>
+        <IsLoading/>
       ) : (
         <>
           {/* Registration Modal */}

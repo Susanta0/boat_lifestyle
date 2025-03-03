@@ -4,6 +4,7 @@ import UserList from "../components/users/userList";
 import { useNavigate } from "react-router-dom";
 import ProductList from "../components/products/ProductList";
 import ProductsCategory from "../components/products/ProductsCategory";
+import Search from "../components/products/Search";
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState("users");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -108,7 +109,7 @@ const Dashboard = () => {
                 </span>
                 <img
                   className="h-8 w-8 rounded-full object-cover"
-                  src="/public/icons8-user-64.png"
+                  src="/icons8-user-64.png"
                   alt="Admin profile"
                 />
               </button>
@@ -153,8 +154,9 @@ const Dashboard = () => {
                 <ProductsCategory />
               </div>
               <br />
-              <div className="bg-white rounded-lg shadow p-4">
-                <h3 className="font-semibold text-lg mb-4">Products List</h3>
+              <div className="bg-white rounded-lg shadow p-4 border">
+                <h3 className="font-semibold text-lg mb-4 w-fit">Products List</h3>
+                <Search/>
                 <ProductList />
               </div>
             </>
