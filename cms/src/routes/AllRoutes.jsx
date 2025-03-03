@@ -4,6 +4,8 @@ import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import Protect from "../protectRoute/Protect";
 import UserDetails from "../pages/UserDetails";
+import EachCategoriesProducts from "../components/products/EachCategoriesProducts";
+import ProductForm from "../pages/ProductForm";
 
 const AllRoutes = () => {
   return (
@@ -26,6 +28,11 @@ const AllRoutes = () => {
             </Protect>
           }
         />
+        <Route
+          path="/products/:category"
+          element={<EachCategoriesProducts />}
+        />
+        <Route path="/products/admin/:category" element={<ProductForm />} />
       </Routes>
     </>
   );

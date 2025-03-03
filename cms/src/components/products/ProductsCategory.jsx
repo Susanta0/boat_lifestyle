@@ -26,7 +26,6 @@ const ProductsCategory = () => {
     <>
     {productCategory.map((category, ind)=>(
         <CategoriesCard category={category} key={ind}/>
-        
     ))}
     </>
   )

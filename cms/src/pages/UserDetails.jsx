@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthContextProvider'
 import axios from 'axios'
+import IsLoading from '../components/IsLoading'
 const UserDetails = () => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -32,20 +33,13 @@ const UserDetails = () => {
   return (
     <>
     {loading ? (
-        <div className="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center p-4 z-50">
-            <div className="flex flex-col items-center space-y-4">
-                <img
-                    src="https://cdn.shopify.com/s/files/1/0057/8938/4802/files/final-loader.gif?v=1670845994"
-                    alt="boat-gif"
-                />
-            </div>
-        </div>
+        <IsLoading/>
     ) : (
         
         <div className="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden p-6">
         {/* Logo */}
         <div className="flex justify-center">
-          <img src="/public/icons8-user-64.png" alt="Admin Logo" className="w-16 h-16 rounded-full" />
+          <img src="/icons8-user-64.png" alt="Admin Logo" className="w-16 h-16 rounded-full" />
         </div>
   
         {/* Admin Details */}

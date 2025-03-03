@@ -62,7 +62,6 @@ const baseProductSchema = {
       "Nirvana",
       "Wireless Headphones",
       "Wireless Speakers",
-      "Wireless Speakers",
       "Wired Headphones",
       "Wired Earphones",
       "Soundbars",
@@ -184,11 +183,12 @@ const wirelessSpeakersSchema = new Schema(
   {
     ...baseProductSchema,
     totalPower: Number, // in watts
-    connectivity: [
-      {
-        type: String, // Bluetooth, AUX, USB, etc.
+    connectivity: {
+      bluetooth: {
+        version: String,
+        range: Number,
       },
-    ],
+    },
     waterResistance: String,
     batteryCapacity: Number, // in mAh
   },
@@ -230,11 +230,12 @@ const soundbarSchema = new Schema(
     ...baseProductSchema,
     totalPower: Number,
     channels: Number,
-    connectivity: [
-      {
-        type: String,
+    connectivity: {
+      bluetooth: {
+        version: String,
+        range: Number,
       },
-    ],
+    },
     subwoofer: {
       included: Boolean,
       type: String, // Wireless/Wired

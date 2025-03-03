@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductTable from "./ProductTable";
 import axios from "axios";
+import IsLoading from "../IsLoading";
 
 const ProductList = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -31,14 +32,7 @@ const ProductList = () => {
   return (
     <>
       {loading ? (
-        <div className="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center p-4 z-50">
-          <div className="flex flex-col items-center space-y-4">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0057/8938/4802/files/final-loader.gif?v=1670845994"
-              alt="boat-gif"
-            />
-          </div>
-        </div>
+       <IsLoading/>
       ) : (
         <div className="container mx-auto">
           <table className="min-w-full divide-y divide-gray-200">
