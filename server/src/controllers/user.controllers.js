@@ -17,7 +17,10 @@ const userController = {
       // validate admin register
       let userRole = "user";
       if (role === "admin") {
-        if (!admincode || admincode !== process.env.ADMIN_SECRET_CODE) {
+        if (
+          !admincode ||
+          admincode.toString() !== process.env.ADMIN_SECRET_CODE
+        ) {
           return res
             .status(403)
             .json({ message: "Invalid admin registration code" });
