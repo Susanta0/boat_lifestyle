@@ -30,9 +30,20 @@ const AllRoutes = () => {
         />
         <Route
           path="/products/:category"
-          element={<EachCategoriesProducts />}
+          element={
+            <Protect>
+              <EachCategoriesProducts />
+            </Protect>
+          }
         />
-        <Route path="/products/admin/:category" element={<ProductForm />} />
+        <Route
+          path="/products/admin/:category"
+          element={
+            <Protect>
+              <ProductForm />
+            </Protect>
+          }
+        />
       </Routes>
     </>
   );

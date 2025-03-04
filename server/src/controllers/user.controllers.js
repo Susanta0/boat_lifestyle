@@ -6,7 +6,7 @@ const userController = {
   // Register new user
   async register(req, res) {
     try {
-      const { email, name, password, role, adminCode } = req.body;
+      const { email, name, password, role, admincode } = req.body;
 
       // Check if user already exists
       const existingUser = await UserModel.findOne({ email });
@@ -17,7 +17,7 @@ const userController = {
       // validate admin register
       let userRole = "user";
       if (role === "admin") {
-        if (!adminCode || adminCode !== process.env.ADMIN_SECRET_CODE) {
+        if (!admincode || admincode !== process.env.ADMIN_SECRET_CODE) {
           return res
             .status(403)
             .json({ message: "Invalid admin registration code" });
@@ -73,7 +73,6 @@ const userController = {
       res.json({ token, name: user.name, role: user.role, email: user.email });
     } catch (error) {
       res.status(500).json({ message: error.message });
-      
     }
   },
 
