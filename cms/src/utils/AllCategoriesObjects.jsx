@@ -139,7 +139,10 @@ export const gamingHeadphonesSchema = {
   surroundSound: false,
   micType: "",
   rgb: false,
-  compatibility: [],
+  compatibility: {
+    android: false,
+    ios: false,
+  },
 };
 
 export const getInitialSchema = (category) => {
