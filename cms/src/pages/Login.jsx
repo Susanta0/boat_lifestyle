@@ -19,7 +19,7 @@ const Login = () => {
     email: "",
     password: "",
     role: "",
-    admincode: 321
+    admincode:321
   });
 
   // for login
@@ -43,7 +43,7 @@ const Login = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name === "admincode" ? Number(value) : value,
     }));
   };
 
@@ -109,11 +109,14 @@ const Login = () => {
 
       const userName = response.data.name || response.data.user.name;
       const token = response.data.token;
+      if(response.data.role !== "admin") {
+        setIsLoading(false);
+        return
+      }
       userLogin(token, userName);
 
       setIsLoginOpen(false);
 
-      // Clear login form
       setLoginData({ email: "", password: "" });
 
       setTimeout(() => {
