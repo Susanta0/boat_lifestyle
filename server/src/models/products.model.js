@@ -260,11 +260,10 @@ const gamingHeadphonesSchema = new Schema(
     surroundSound: Boolean,
     micType: String,
     rgb: Boolean,
-    compatibility: [
-      {
-        type: String, // PC, PS4, Xbox, etc.
-      },
-    ],
+    compatibility: {
+      android: Boolean,
+      ios: Boolean,
+    },
     cableLength: Number,
   },
   { versionKey: false, timestamps: true }
