@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
 import { useParams } from "react-router-dom";
 import { getInitialSchema } from "../utils/AllCategoriesObjects";
+import { BatteryCapacity, CableLength, Channels, ChargingCase, Compatibility, Connectivity, Connector, DisplayType, DriverSize, DriverType, Foldable, Frequency, HealthFeatures, Impedance, MicIncluded, MicType, Mountable, NoiseControl, Premium_Features, Resolution, Rgb, ScreenSize, Subwoofer, SurroundSound, TotalPower, WaterResistance } from "../components/categoriesField/Fields";
 
 const ProductForm = () => {
   const [loading, setLoading] = useState(false);
@@ -21,17 +22,8 @@ const ProductForm = () => {
     const { name, value, type, checked } = e.target;
     
     // Handle checkbox inputs
-    if (type === "checkbox") {
-      setFormData({
-        ...formData,
-        [name]: checked,
-      });
-      return;
-    }
-    
-    // Handle number inputs
-    const updatedValue = type === "number" ? Number(value) : value;
-    
+  const updatedValue = type === "checkbox" ? checked : value;
+  
     // Handle nested properties
     if (name.includes(".")) {
       const keys = name.split(".");
@@ -277,138 +269,113 @@ const ProductForm = () => {
 
               {/* Charging Case */}
               {formData.chargingCase && (
-                <>
-                  <h3 className="text-lg font-semibold text-gray-700 mt-4 mb-2">
-                    Charging Case
-                  </h3>
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Battery Life (hrs) *
-                      </label>
-                      <input
-                        type="number"
-                        name="chargingCase.batteryLife"
-                        value={formData.chargingCase.batteryLife}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-lg"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Type *
-                      </label>
-                      <input
-                        type="text"
-                        name="chargingCase.type"
-                        value={formData.chargingCase.type}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-lg"
-                      />
-                    </div>
-                  </div>
-                </>
+                <ChargingCase handleChange={handleChange} formData={formData}/>
               )}
 
               {/* Noise Control */}
               {'noiseControl' in formData && (
-                <div className="mb-4">
-                  <label className="inline-flex items-center">
-                    <input
-                      type="checkbox"
-                      name="noiseControl"
-                      checked={formData.noiseControl}
-                      onChange={handleChange}
-                      className="mr-2"
-                    />
-                    <span className="text-sm font-medium text-gray-700">
-                      Noise Control
-                    </span>
-                  </label>
-                </div>
+                <NoiseControl handleChange={handleChange} formData={formData}/>
               )}
 
               {/* Water Resistance */}
               {'waterResistance' in formData && (
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Water Resistance
-                  </label>
-                  <input
-                    type="text"
-                    name="waterResistance"
-                    value={formData.waterResistance}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border rounded-lg"
-                  />
-                </div>
+                <WaterResistance handleChange={handleChange} formData={formData}/>
               )}
 
               {/* Connectivity */}
               {formData.connectivity && formData.connectivity.bluetooth && (
-                <>
-                  <h3 className="text-lg font-semibold text-gray-700 mt-4 mb-2">
-                    Connectivity
-                  </h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Bluetooth Version
-                      </label>
-                      <input
-                        type="text"
-                        name="connectivity.bluetooth.version"
-                        value={formData.connectivity.bluetooth.version}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-lg"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Range (m)
-                      </label>
-                      <input
-                        type="number"
-                        name="connectivity.bluetooth.range"
-                        value={formData.connectivity.bluetooth.range}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-lg"
-                      />
-                    </div>
-                  </div>
-                </>
+                <Connectivity handleChange={handleChange} formData={formData}/>
               )}
 
               {/* Category-specific fields */}
               {formData.driverSize !== undefined && (
-                <div className="mb-4 mt-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Driver Size (mm)
-                  </label>
-                  <input
-                    type="text"
-                    name="driverSize"
-                    value={formData.driverSize}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border rounded-lg"
-                  />
-                </div>
+               <DriverSize handleChange={handleChange} formData={formData}/>
               )}
 
               {formData.displayType !== undefined && (
-                <div className="mb-4 mt-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Display Type
-                  </label>
-                  <input
-                    type="text"
-                    name="displayType"
-                    value={formData.displayType}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border rounded-lg"
-                  />
-                </div>
+               <DisplayType handleChange={handleChange} formData={formData}/>
               )}
+
+              {formData.screenSize !== undefined && (
+                <ScreenSize handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.resolution !== undefined && (
+               <Resolution handleChange={handleChange} formData={formData}/>
+              )}
+
+                {formData.healthFeatures !== undefined && (
+                <HealthFeatures handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.compatibility !== undefined && (
+              <Compatibility handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.driverType !== undefined && (
+                <DriverType handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.frequency !== undefined && (
+               <Frequency handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.impedance !== undefined && (
+               <Impedance handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.premium_features !== undefined && (
+                <Premium_Features handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.foldable !== undefined && (
+                <Foldable handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.totalPower !== undefined && (
+                <TotalPower handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.batteryCapacity !== undefined && (
+                <BatteryCapacity handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.cableLength !== undefined && (
+                <CableLength handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.connector !== undefined && (
+                <Connector handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.micIncluded !== undefined && (
+                <MicIncluded handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.channels !== undefined && (
+                <Channels handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.subwoofer !== undefined && (
+                <Subwoofer handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.mountable !== undefined && (
+                <Mountable handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.surroundSound !== undefined && (
+                <SurroundSound handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.micType !== undefined && (
+                <MicType handleChange={handleChange} formData={formData}/>
+              )}
+
+              {formData.rgb !== undefined && (
+                <Rgb handleChange={handleChange} formData={formData}/>
+              )}
+
             </div>
           </div>
 

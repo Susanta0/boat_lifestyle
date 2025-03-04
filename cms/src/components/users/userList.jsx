@@ -23,7 +23,6 @@ const UserList = () => {
           Authorization: `Bearer ${loginStatus.token}`,
         },
       });
-      console.log(response.data);
       setUsers(response.data);
       setLoading(false);
     } catch (error) {

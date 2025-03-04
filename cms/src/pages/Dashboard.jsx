@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
 import UserList from "../components/users/userList";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +6,21 @@ import ProductList from "../components/products/ProductList";
 import ProductsCategory from "../components/products/ProductsCategory";
 import Search from "../components/products/Search";
 const Dashboard = () => {
-  const [activeSection, setActiveSection] = useState("users");
+   // Retrieve the last active section from localStorage, default to "users"
+   const [activeSection, setActiveSection] = useState(
+    localStorage.getItem("activeSection") || "users"
+  );
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { loginStatus, userLogout } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Store the active section in localStorage whenever it changes
+    localStorage.setItem("activeSection", activeSection);
+  }, [activeSection]);
+
   const handleLogout = () => {
     userLogout();
     setIsMenuOpen(false);

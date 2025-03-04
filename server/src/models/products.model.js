@@ -237,8 +237,15 @@ const soundbarSchema = new Schema(
       },
     },
     subwoofer: {
-      included: Boolean,
-      type: String, // Wireless/Wired
+      included: {
+        type: Boolean,
+        default: false,
+      },
+      type: {
+        type: String,
+        enum: ["Wireless", "Wired"],
+        default: "Wired",
+      },
     },
     mountable: Boolean,
   },

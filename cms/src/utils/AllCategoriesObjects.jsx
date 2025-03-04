@@ -29,7 +29,7 @@ export const trueWirelessSchema = {
       range: "",
     },
   },
-};
+}; 
 
 export const neckbandSchema = {
   ...baseProductSchema,
@@ -51,8 +51,8 @@ export const smartWatchSchema = {
   resolution: "",
   healthFeatures: [],
   compatibility: {
-    android: "",
-    ios: "",
+    android: false,
+    ios: false,
   },
   waterResistance: "",
 };
@@ -125,7 +125,10 @@ export const soundbarSchema = {
       range: "",
     },
   },
-  subwoofer: false,
+  subwoofer: {
+    included: false,
+    type: "",
+  },
   mountable: false,
 };
 
