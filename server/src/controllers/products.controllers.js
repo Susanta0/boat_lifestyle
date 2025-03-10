@@ -1,4 +1,15 @@
-const { TrueWireless, Neckband, SmartWatch, Nirvana, WirelessHeadphones, WirelessSpeakers, WiredHeadphones, WiredEarphones, Soundbar, GamingHeadphones } = require("../models/products.model");
+const {
+  TrueWireless,
+  Neckband,
+  SmartWatch,
+  Nirvana,
+  WirelessHeadphones,
+  WirelessSpeakers,
+  WiredHeadphones,
+  WiredEarphones,
+  Soundbar,
+  GamingHeadphones,
+} = require("../models/products.model");
 
 const getModelByCategory = (category) => {
   const categoryToModel = {
@@ -18,7 +29,6 @@ const getModelByCategory = (category) => {
 
 // User Controllers (Public Access)
 const productsControllers = {
-
   // Get all product categories
   getAllCategories: async (req, res) => {
     try {
@@ -34,25 +44,41 @@ const productsControllers = {
         "Soundbars",
         "Gaming Headphones",
       ];
-      
+
       return res.json(categories);
     } catch (error) {
-      return res.status(500).json({ message: "Server error", error: error.message });
+      return res
+        .status(500)
+        .json({ message: "Server error", error: error.message });
     }
   },
 
   // Get all products across all categories
   getAllCategoriesProducts: async (req, res) => {
     try {
+      const { sortBy, order } = req.query;
+      const sortOrder = order === "desc" ? -1 : 1;
       const productModels = [
-        TrueWireless, Neckband, SmartWatch, Nirvana,
-        WirelessHeadphones, WirelessSpeakers, WiredHeadphones,
-        WiredEarphones, Soundbar, GamingHeadphones
+        TrueWireless,
+        Neckband,
+        SmartWatch,
+        Nirvana,
+        WirelessHeadphones,
+        WirelessSpeakers,
+        WiredHeadphones,
+        WiredEarphones,
+        Soundbar,
+        GamingHeadphones,
       ];
 
       // Fetch all products from all categories
       const allProducts = await Promise.all(
-        productModels.map((model) => model.find().select("-createdBy"))
+        productModels.map((model) =>
+          model
+            .find()
+            .sort({ [sortBy]: sortOrder })
+            .select("-createdBy")
+        )
       );
 
       // Flatten results from all models
@@ -60,7 +86,9 @@ const productsControllers = {
 
       return res.json(flattenedResults);
     } catch (error) {
-      return res.status(500).json({ message: "Server error", error: error.message });
+      return res
+        .status(500)
+        .json({ message: "Server error", error: error.message });
     }
   },
 
@@ -68,12 +96,17 @@ const productsControllers = {
   getProductsByCategory: async (req, res) => {
     try {
       const { category } = req.params;
+      const { sortBy, order } = req.query;
+      const sortOrder = order === "desc" ? -1 : 1;
       const productModel = getModelByCategory(category);
 
       if (!productModel) {
         return res.status(400).json({ message: "Category not found" });
       }
-      const products = await productModel.find().select("-createdBy");
+      const products = await productModel
+        .find()
+        .sort({ [sortBy]: sortOrder })
+        .select("-createdBy");
       return res.json(products);
     } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });
@@ -83,7 +116,7 @@ const productsControllers = {
   // get single product by id
   getProductById: async (req, res) => {
     try {
-      const { category, id } = req.params
+      const { category, id } = req.params;
       const productModel = getModelByCategory(category);
       if (!productModel) {
         return res.status(400).json({ message: "Invalid Category" });
@@ -103,9 +136,16 @@ const productsControllers = {
     try {
       const { query } = req.query;
       const productModels = [
-        TrueWireless, Neckband, SmartWatch, Nirvana,
-        WirelessHeadphones, WirelessSpeakers, WiredHeadphones,
-        WiredEarphones, Soundbar, GamingHeadphones
+        TrueWireless,
+        Neckband,
+        SmartWatch,
+        Nirvana,
+        WirelessHeadphones,
+        WirelessSpeakers,
+        WiredHeadphones,
+        WiredEarphones,
+        Soundbar,
+        GamingHeadphones,
       ];
 
       const searchResult = await Promise.all(
@@ -129,9 +169,45 @@ const productsControllers = {
     }
   },
 
+  // Sort products across all categories
+  sortProducts: async (req, res) => {
+    try {
+      const { sortBy, order } = req.query;
+      const sortOrder = order === "desc" ? -1 : 1;
+      const productModels = [
+        TrueWireless,
+        Neckband,
+        SmartWatch,
+        Nirvana,
+        WirelessHeadphones,
+        WirelessSpeakers,
+        WiredHeadphones,
+        WiredEarphones,
+        Soundbar,
+        GamingHeadphones,
+      ];
+
+      // Fetch all products from all categories and sort them
+      const sortedProducts = await Promise.all(
+        productModels.map((model) =>
+          model
+            .find()
+            .sort({ [sortBy]: sortOrder })
+            .select("-createdBy")
+        )
+      );
+
+      // Flatten results from all models
+      const flattenedResults = sortedProducts.flat();
+
+      return res.json(flattenedResults);
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Server error", error: error.message });
+    }
+  },
 };
-
-
 
 // Admin Controllers (Protected Routes)
 const adminProductsControllers = {
@@ -139,9 +215,9 @@ const adminProductsControllers = {
   addProduct: async (req, res) => {
     try {
       const { category } = req.params;
-      
+
       const productModel = getModelByCategory(category);
-      
+
       if (!productModel) {
         return res.status(400).json({ message: "Invalid category" });
       }
@@ -160,14 +236,14 @@ const adminProductsControllers = {
     }
   },
 
-   // Update product
+  // Update product
   updateProduct: async (req, res) => {
     try {
       const { category, id } = req.params;
       const productModel = getModelByCategory(category);
-      
+
       if (!productModel) {
-        return res.status(400).json({ message: 'Invalid category' });
+        return res.status(400).json({ message: "Invalid category" });
       }
 
       const productData = await productModel.findByIdAndUpdate(
@@ -177,38 +253,37 @@ const adminProductsControllers = {
       );
 
       if (!productData) {
-        return res.status(404).json({ message: 'Product not found' });
+        return res.status(404).json({ message: "Product not found" });
       }
 
       res.json(productData);
     } catch (error) {
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({ message: "Server error", error: error.message });
     }
   },
 
-   // Delete product
+  // Delete product
   deleteProduct: async (req, res) => {
     try {
       const { category, id } = req.params;
-      
+
       const productModel = getModelByCategory(category);
-      
+
       if (!productModel) {
-        return res.status(400).json({ message: 'Invalid category' });
+        return res.status(400).json({ message: "Invalid category" });
       }
 
       const productData = await productModel.findByIdAndDelete(id);
-      
+
       if (!productData) {
-        return res.status(404).json({ message: 'Product not found' });
+        return res.status(404).json({ message: "Product not found" });
       }
 
-      res.json({ message: 'Product deleted successfully' });
+      res.json({ message: "Product deleted successfully" });
     } catch (error) {
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({ message: "Server error", error: error.message });
     }
-  }
-  
+  },
 };
 
-module.exports = {productsControllers, adminProductsControllers};
+module.exports = { productsControllers, adminProductsControllers };
