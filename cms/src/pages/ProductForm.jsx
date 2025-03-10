@@ -3,32 +3,59 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
 import { useParams } from "react-router-dom";
 import { getInitialSchema } from "../utils/AllCategoriesObjects";
-import { BatteryCapacity, CableLength, Channels, ChargingCase, Compatibility, Connectivity, Connector, DisplayType, DriverSize, DriverType, Foldable, Frequency, HealthFeatures, Impedance, MicIncluded, MicType, Mountable, NoiseControl, Premium_Features, Resolution, Rgb, ScreenSize, Subwoofer, SurroundSound, TotalPower, WaterResistance } from "../components/categoriesField/Fields";
+import {
+  BatteryCapacity,
+  CableLength,
+  Channels,
+  ChargingCase,
+  Compatibility,
+  Connectivity,
+  Connector,
+  DisplayType,
+  DriverSize,
+  DriverType,
+  Foldable,
+  Frequency,
+  HealthFeatures,
+  Impedance,
+  MicIncluded,
+  MicType,
+  Mountable,
+  NoiseControl,
+  Premium_Features,
+  Resolution,
+  Rgb,
+  ScreenSize,
+  Subwoofer,
+  SurroundSound,
+  TotalPower,
+  WaterResistance,
+} from "../components/categoriesField/Fields";
 
 const ProductForm = () => {
   const [loading, setLoading] = useState(false);
-  const { category } = useParams();
+  const { category, id } = useParams();
   const { loginStatus } = useContext(AuthContext);
   const [formData, setFormData] = useState(() => {
     const initialSchema = getInitialSchema(category);
     return {
       ...initialSchema,
-      category: category, 
+      category: category,
     };
   });
 
   // Handle basic input changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
+
     // Handle checkbox inputs
-  const updatedValue = type === "checkbox" ? checked : value;
-  
+    const updatedValue = type === "checkbox" ? checked : value;
+
     // Handle nested properties
     if (name.includes(".")) {
       const keys = name.split(".");
       const nestedUpdate = { ...formData };
-      
+
       // Navigate to the appropriate nested object
       let current = nestedUpdate;
       for (let i = 0; i < keys.length - 1; i++) {
@@ -37,7 +64,7 @@ const ProductForm = () => {
         }
         current = current[keys[i]];
       }
-      
+
       // Set the value
       current[keys[keys.length - 1]] = updatedValue;
       setFormData(nestedUpdate);
@@ -64,13 +91,34 @@ const ProductForm = () => {
     });
   };
 
+  const fetchProductData = async () => {
+    if (id) {
+      try {
+        const response = await axios.get(
+          `https://boat-lifestyle-server.onrender.com/api/products/category/${category}/${id}`
+        );
+        setFormData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchProductData();
+  }, [id]);
+
   const addData = async () => {
     try {
       setLoading(true);
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `https://boat-lifestyle-server.onrender.com/api/products/admin/${category}/${id}`
+        : `https://boat-lifestyle-server.onrender.com/api/products/admin/${category}`;
 
       const response = await axios({
-        method: "POST",
-        url: `https://boat-lifestyle-server.onrender.com/api/products/${`admin/${category}`}`,
+        method,
+        url,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${loginStatus.token}`,
@@ -119,9 +167,12 @@ const ProductForm = () => {
   return (
     <div className="max-w-5xl mx-auto p-8 bg-white rounded-xl shadow-lg">
       <div className="mb-8 border-b pb-4">
-        <h2 className="text-3xl font-bold text-gray-800">Add New Product</h2>
+        <h2 className="text-3xl font-bold text-gray-800">
+          {id ? "Edit Product" : "Add New Product"}
+        </h2>
         <p className="text-gray-500 mt-2">
-          Fill in the details to add a new product to your inventory
+          Fill in the details to {id ? "edit" : "add"} a product to your
+          inventory
         </p>
       </div>
 
@@ -269,113 +320,130 @@ const ProductForm = () => {
 
               {/* Charging Case */}
               {formData.chargingCase && (
-                <ChargingCase handleChange={handleChange} formData={formData}/>
+                <ChargingCase handleChange={handleChange} formData={formData} />
               )}
 
               {/* Noise Control */}
-              {'noiseControl' in formData && (
-                <NoiseControl handleChange={handleChange} formData={formData}/>
+              {"noiseControl" in formData && (
+                <NoiseControl handleChange={handleChange} formData={formData} />
               )}
 
               {/* Water Resistance */}
-              {'waterResistance' in formData && (
-                <WaterResistance handleChange={handleChange} formData={formData}/>
+              {"waterResistance" in formData && (
+                <WaterResistance
+                  handleChange={handleChange}
+                  formData={formData}
+                />
               )}
 
               {/* Connectivity */}
               {formData.connectivity && formData.connectivity.bluetooth && (
-                <Connectivity handleChange={handleChange} formData={formData}/>
+                <Connectivity handleChange={handleChange} formData={formData} />
               )}
 
               {/* Category-specific fields */}
               {formData.driverSize !== undefined && (
-               <DriverSize handleChange={handleChange} formData={formData}/>
+                <DriverSize handleChange={handleChange} formData={formData} />
               )}
 
               {formData.displayType !== undefined && (
-               <DisplayType handleChange={handleChange} formData={formData}/>
+                <DisplayType handleChange={handleChange} formData={formData} />
               )}
 
               {formData.screenSize !== undefined && (
-                <ScreenSize handleChange={handleChange} formData={formData}/>
+                <ScreenSize handleChange={handleChange} formData={formData} />
               )}
 
               {formData.resolution !== undefined && (
-               <Resolution handleChange={handleChange} formData={formData}/>
+                <Resolution handleChange={handleChange} formData={formData} />
               )}
 
-                {formData.healthFeatures !== undefined && (
-                <HealthFeatures handleChange={handleChange} formData={formData}/>
+              {formData.healthFeatures !== undefined && (
+                <HealthFeatures
+                  handleChange={handleChange}
+                  formData={formData}
+                />
               )}
 
               {formData.compatibility !== undefined && (
-              <Compatibility handleChange={handleChange} formData={formData}/>
+                <Compatibility
+                  handleChange={handleChange}
+                  formData={formData}
+                />
               )}
 
               {formData.driverType !== undefined && (
-                <DriverType handleChange={handleChange} formData={formData}/>
+                <DriverType handleChange={handleChange} formData={formData} />
               )}
 
               {formData.frequency !== undefined && (
-               <Frequency handleChange={handleChange} formData={formData}/>
+                <Frequency handleChange={handleChange} formData={formData} />
               )}
 
               {formData.impedance !== undefined && (
-               <Impedance handleChange={handleChange} formData={formData}/>
+                <Impedance handleChange={handleChange} formData={formData} />
               )}
 
               {formData.premium_features !== undefined && (
-                <Premium_Features handleChange={handleChange} formData={formData}/>
+                <Premium_Features
+                  handleChange={handleChange}
+                  formData={formData}
+                />
               )}
 
               {formData.foldable !== undefined && (
-                <Foldable handleChange={handleChange} formData={formData}/>
+                <Foldable handleChange={handleChange} formData={formData} />
               )}
 
               {formData.totalPower !== undefined && (
-                <TotalPower handleChange={handleChange} formData={formData}/>
+                <TotalPower handleChange={handleChange} formData={formData} />
               )}
 
               {formData.batteryCapacity !== undefined && (
-                <BatteryCapacity handleChange={handleChange} formData={formData}/>
+                <BatteryCapacity
+                  handleChange={handleChange}
+                  formData={formData}
+                />
               )}
 
               {formData.cableLength !== undefined && (
-                <CableLength handleChange={handleChange} formData={formData}/>
+                <CableLength handleChange={handleChange} formData={formData} />
               )}
 
               {formData.connector !== undefined && (
-                <Connector handleChange={handleChange} formData={formData}/>
+                <Connector handleChange={handleChange} formData={formData} />
               )}
 
               {formData.micIncluded !== undefined && (
-                <MicIncluded handleChange={handleChange} formData={formData}/>
+                <MicIncluded handleChange={handleChange} formData={formData} />
               )}
 
               {formData.channels !== undefined && (
-                <Channels handleChange={handleChange} formData={formData}/>
+                <Channels handleChange={handleChange} formData={formData} />
               )}
 
               {formData.subwoofer !== undefined && (
-                <Subwoofer handleChange={handleChange} formData={formData}/>
+                <Subwoofer handleChange={handleChange} formData={formData} />
               )}
 
               {formData.mountable !== undefined && (
-                <Mountable handleChange={handleChange} formData={formData}/>
+                <Mountable handleChange={handleChange} formData={formData} />
               )}
 
               {formData.surroundSound !== undefined && (
-                <SurroundSound handleChange={handleChange} formData={formData}/>
+                <SurroundSound
+                  handleChange={handleChange}
+                  formData={formData}
+                />
               )}
 
               {formData.micType !== undefined && (
-                <MicType handleChange={handleChange} formData={formData}/>
+                <MicType handleChange={handleChange} formData={formData} />
               )}
 
               {formData.rgb !== undefined && (
-                <Rgb handleChange={handleChange} formData={formData}/>
+                <Rgb handleChange={handleChange} formData={formData} />
               )}
-
             </div>
           </div>
 
@@ -584,6 +652,8 @@ const ProductForm = () => {
                 </svg>
                 Processing...
               </>
+            ) : id ? (
+              "Update Product"
             ) : (
               "Add Product"
             )}

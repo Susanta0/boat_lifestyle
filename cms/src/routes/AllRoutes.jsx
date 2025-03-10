@@ -44,6 +44,14 @@ const AllRoutes = () => {
             </Protect>
           }
         />
+        <Route
+          path="/products/admin/:category/edit/:id"
+          element={
+            <Protect>
+              <ProductForm />
+            </Protect>
+          }
+        />
       </Routes>
     </>
   );

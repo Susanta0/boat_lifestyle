@@ -38,6 +38,10 @@ const EachCategoriesProducts = () => {
     navigate(`/products/admin/${category}`);
   };
 
+  const handleEditProduct = (productId) => {
+    navigate(`/products/admin/${category}/edit/${productId}`);
+  };
+
   if (loading) {
     return <IsLoading />;
   }
@@ -148,6 +152,7 @@ const EachCategoriesProducts = () => {
                       <button
                         className="p-1 text-blue-600 hover:text-blue-800"
                         title="Edit"
+                        onClick={() => handleEditProduct(product._id)}
                       >
                         <Pencil size={18} />
                       </button>

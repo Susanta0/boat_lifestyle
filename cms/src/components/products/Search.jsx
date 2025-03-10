@@ -1,6 +1,9 @@
 import React from "react";
 
-const Search = () => {
+const Search = ({ searchTerm, setSearchTerm }) => {
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
   return (
     <div className="max-w-md mx-auto my-4">
       <div className="relative flex items-center">
@@ -25,14 +28,9 @@ const Search = () => {
           type="text"
           className="w-full pl-10 pr-4 py-2 rounded-l-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
           placeholder="Search for products..."
+          value={searchTerm}
+          onChange={handleInputChange}
         />
-
-        <button
-          type="button"
-          className="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-        >
-          Search
-        </button>
       </div>
     </div>
   );

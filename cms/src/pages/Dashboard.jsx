@@ -4,10 +4,9 @@ import UserList from "../components/users/userList";
 import { useNavigate } from "react-router-dom";
 import ProductList from "../components/products/ProductList";
 import ProductsCategory from "../components/products/ProductsCategory";
-import Search from "../components/products/Search";
 const Dashboard = () => {
-   // Retrieve the last active section from localStorage, default to "users"
-   const [activeSection, setActiveSection] = useState(
+  // Retrieve the last active section from localStorage, default to "users"
+  const [activeSection, setActiveSection] = useState(
     localStorage.getItem("activeSection") || "users"
   );
 
@@ -165,8 +164,9 @@ const Dashboard = () => {
               </div>
               <br />
               <div className="bg-white rounded-lg shadow p-4 border">
-                <h3 className="font-semibold text-lg mb-4 w-fit">Products List</h3>
-                <Search/>
+                <h3 className="font-semibold text-lg mb-4 w-fit">
+                  Products List
+                </h3>
                 <ProductList />
               </div>
             </>
