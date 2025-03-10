@@ -52,7 +52,7 @@ const BestSeller = () => {
               onMouseEnter={(e) => e.target.play()}
               onMouseLeave={(e) => e.target.pause()}
             ></video>
-            <p class="font-extrabold text-base">{items.title}</p>
+            <p className="font-extrabold text-base">{items.title}</p>
           </div>
         ))}
       </div>
