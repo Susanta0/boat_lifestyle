@@ -1,16 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Trash, Pencil } from "lucide-react";
-import { AuthContext } from "../../context/AuthContextProvider";
-import axios from "axios";
-
-const ProductTable = ({
-  name,
-  image,
-  stock,
-  category,
-  price,
-}) => {
- 
+const ProductTable = ({ name, image, stock, category, price }) => {
   return (
     <>
       <tr>
@@ -30,10 +18,7 @@ const ProductTable = ({
 
         <td className="px-6 py-4 whitespace-nowrap">₹{price}</td>
         <td className="px-6 py-4 whitespace-nowrap">{stock}</td>
-       
       </tr>
-
-     
     </>
   );
 };
