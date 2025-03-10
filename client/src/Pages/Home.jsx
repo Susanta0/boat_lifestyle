@@ -27,16 +27,16 @@ const Home = () => {
       <br />
       <LifeStyle />
       <br />
-      <BestOfBoat/>
-      <JoinTribe/>
+      <BestOfBoat />
+      <JoinTribe />
       <br />
-      <Blogs/>
+      <Blogs />
       <br />
-      <Press/>
+      <Press />
       <br />
       <br />
       <br />
-      <Footer/>
+      <Footer />
     </>
   );
 };
