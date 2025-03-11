@@ -18,7 +18,7 @@ router.get("/all", productsControllers.getAllCategoriesProducts);
 router.get("/category/:category", productsControllers.getProductsByCategory);
 
 // Get a single product by ID
-router.get("/:id", productsControllers.getProductById);
+router.get("/category/:category/:id", productsControllers.getProductById);
 
 // Search products across all categories
 router.get("/search", productsControllers.searchProducts);

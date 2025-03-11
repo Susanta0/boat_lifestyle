@@ -22,8 +22,7 @@ const EachCategoriesProducts = () => {
       const response = await axios.get(
         `https://boat-lifestyle-server.onrender.com/api/products/category/${category}`
       );
-      setCategoryProducts(response.data.products);
-      console.log(response.data.products);
+      setCategoryProducts(response.data);
     } catch (error) {
       console.error(error);
     } finally {
