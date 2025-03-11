@@ -122,9 +122,6 @@ const DisplayProducts = () => {
     fetchData();
   }, []);
 
-  //   if (loading) {
-  //     return <ProductCardSkeleton />;
-  //   }
   return (
     <>
       {loading ? (

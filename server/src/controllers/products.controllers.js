@@ -45,7 +45,14 @@ const productsControllers = {
         "Gaming Headphones",
       ];
 
-      return res.json(categories);
+      const categoriesWithUrls = categories.map((category) => ({
+        categoryname: category,
+        url: `/api/products/category/${category
+          .replace(/\s+/g, "-")
+          .toLowerCase()}`,
+      }));
+
+      return res.json(categoriesWithUrls);
     } catch (error) {
       return res
         .status(500)
@@ -56,7 +63,7 @@ const productsControllers = {
   // Get all products across all categories
   getAllCategoriesProducts: async (req, res) => {
     try {
-      const { sortBy, order } = req.query;
+      const { sortBy, order, skip = 0, limit = 30 } = req.query;
       const sortOrder = order === "desc" ? -1 : 1;
       const productModels = [
         TrueWireless,
@@ -77,6 +84,8 @@ const productsControllers = {
           model
             .find()
             .sort({ [sortBy]: sortOrder })
+            .skip(parseInt(skip))
+            .limit(parseInt(limit))
             .select("-createdBy")
         )
       );
@@ -84,7 +93,18 @@ const productsControllers = {
       // Flatten results from all models
       const flattenedResults = allProducts.flat();
 
-      return res.json(flattenedResults);
+      // Get total count of products
+      const totalProducts = await Promise.all(
+        productModels.map((model) => model.countDocuments())
+      );
+      const total = totalProducts.reduce((acc, count) => acc + count, 0);
+
+      return res.json({
+        products: flattenedResults,
+        total,
+        skip: parseInt(skip),
+        limit: parseInt(limit),
+      });
     } catch (error) {
       return res
         .status(500)
@@ -96,9 +116,12 @@ const productsControllers = {
   getProductsByCategory: async (req, res) => {
     try {
       const { category } = req.params;
-      const { sortBy, order } = req.query;
+      const formattedCategory = category
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, (char) => char.toUpperCase());
+      const { sortBy, order, skip = 0, limit = 30 } = req.query;
       const sortOrder = order === "desc" ? -1 : 1;
-      const productModel = getModelByCategory(category);
+      const productModel = getModelByCategory(formattedCategory);
 
       if (!productModel) {
         return res.status(400).json({ message: "Category not found" });
@@ -106,8 +129,18 @@ const productsControllers = {
       const products = await productModel
         .find()
         .sort({ [sortBy]: sortOrder })
+        .skip(parseInt(skip))
+        .limit(parseInt(limit))
         .select("-createdBy");
-      return res.json(products);
+
+      const total = await productModel.countDocuments();
+
+      return res.json({
+        products,
+        total,
+        skip: parseInt(skip),
+        limit: parseInt(limit),
+      });
     } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });
     }
@@ -116,16 +149,30 @@ const productsControllers = {
   // get single product by id
   getProductById: async (req, res) => {
     try {
-      const { category, id } = req.params;
-      const productModel = getModelByCategory(category);
-      if (!productModel) {
-        return res.status(400).json({ message: "Invalid Category" });
+      const { id } = req.params;
+      const productModels = [
+        TrueWireless,
+        Neckband,
+        SmartWatch,
+        Nirvana,
+        WirelessHeadphones,
+        WirelessSpeakers,
+        WiredHeadphones,
+        WiredEarphones,
+        Soundbar,
+        GamingHeadphones,
+      ];
+
+      let product = null;
+      for (const model of productModels) {
+        product = await model.findById(id).select("-createdBy");
+        if (product) break;
       }
-      const product = await productModel.findById(id).select("-createdBy");
+
       if (!product) {
         return res.status(404).json({ message: "product not found" });
       }
-      return res.json(product);
+      return res.json({ product });
     } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });
     }
