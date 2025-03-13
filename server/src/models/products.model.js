@@ -11,6 +11,10 @@ const baseProductSchema = {
     type: String,
     required: true,
   },
+  images: {
+    type: [String],
+    validate: [(array) => array.length === 5, "Must specify exactly 5 images"],
+  },
   description: {
     type: String,
     required: true,
@@ -48,7 +52,7 @@ const baseProductSchema = {
     min: 0,
     max: 100,
   },
-  stock:{
+  stock: {
     type: Number,
     required: true,
   },

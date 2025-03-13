@@ -12,6 +12,7 @@ export const baseProductSchema = {
   beforeOfferPrice: "",
   discountPercentage: "",
   stock: "",
+  images: ["", "", "", "", ""],
 };
 
 // Wireless category specific schema
@@ -29,7 +30,7 @@ export const trueWirelessSchema = {
       range: "",
     },
   },
-}; 
+};
 
 export const neckbandSchema = {
   ...baseProductSchema,

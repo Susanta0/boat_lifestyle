@@ -17,6 +17,7 @@ import {
   Foldable,
   Frequency,
   HealthFeatures,
+  ImagesField,
   Impedance,
   MicIncluded,
   MicType,
@@ -68,6 +69,15 @@ const ProductForm = () => {
       // Set the value
       current[keys[keys.length - 1]] = updatedValue;
       setFormData(nestedUpdate);
+    } else if (name.startsWith("images[")) {
+      // Handle array updates
+      const index = parseInt(name.match(/images\[(\d+)\]/)[1], 10);
+      const updatedImages = [...formData.images];
+      updatedImages[index] = updatedValue;
+      setFormData({
+        ...formData,
+        images: updatedImages,
+      });
     } else {
       // Handle regular properties
       setFormData({
@@ -611,6 +621,10 @@ const ProductForm = () => {
                   </div>
                 </div>
               </div>
+
+              {formData.images !== undefined && (
+                <ImagesField handleChange={handleChange} formData={formData} />
+              )}
             </div>
           </div>
         </div>
