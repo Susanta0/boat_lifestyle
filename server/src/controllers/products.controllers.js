@@ -227,6 +227,13 @@ const adminProductsControllers = {
         createdBy: req.user._id,
         category,
       };
+
+      if (!productData.images || productData.images.length !== 5) {
+        return res
+          .status(400)
+          .json({ message: "Must provide exactly 5 images" });
+      }
+
       const product = await productModel.create(productData);
       return res.status(201).json(product);
     } catch (error) {
@@ -254,6 +261,12 @@ const adminProductsControllers = {
 
       if (!productData) {
         return res.status(404).json({ message: "Product not found" });
+      }
+
+      if (req.body.images && req.body.images.length !== 5) {
+        return res
+          .status(400)
+          .json({ message: "Must provide exactly 5 images" });
       }
 
       res.json(productData);

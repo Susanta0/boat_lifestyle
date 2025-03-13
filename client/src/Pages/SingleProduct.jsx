@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
+import { BoatLoading } from "../Components/ProductCardSkeleton";
 
 const SingleProduct = () => {
   const { category, id } = useParams();
@@ -63,7 +64,7 @@ const SingleProduct = () => {
   };
 
   if (loading) {
-    return <div className="mt-36 text-center">Loading...</div>;
+    return <BoatLoading />;
   }
 
   return (

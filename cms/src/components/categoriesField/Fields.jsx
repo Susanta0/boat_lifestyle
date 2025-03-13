@@ -537,6 +537,46 @@ const Rgb = ({ handleChange, formData }) => {
   );
 };
 
+const ImagesField = ({ handleChange, formData }) => {
+  return (
+    <div className="mb-4 mt-4">
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        Images
+      </label>
+      {formData.images.map((image, index) => (
+        <div key={index} className="mb-2">
+          <input
+            type="text"
+            name={`images[${index}]`}
+            placeholder={`Image URL ${index + 1}`}
+            value={image}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg mb-2"
+          />
+        </div>
+      ))}
+      {formData.images.length > 0 && (
+        <div className="mt-4 border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+          <div className="flex justify-center flex-wrap">
+            {formData.images.map(
+              (image, index) =>
+                image && (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Preview ${index + 1}`}
+                    className="h-20 w-20 object-contain rounded mb-2 mx-1"
+                  />
+                )
+            )}
+          </div>
+          <p className="text-sm text-gray-500 mt-1">All Images Preview</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export {
   ChargingCase,
   NoiseControl,
@@ -564,4 +604,5 @@ export {
   SurroundSound,
   MicType,
   Rgb,
+  ImagesField,
 };
