@@ -22,6 +22,13 @@ const itemsCard = ({ items }) => {
               : `${items.playbackHours} Hours Playback`}
           </p>
         </div>
+        {items.premium_features && items.premium_features.length > 0 && (
+          <div className="bg-[#FCC50B] absolute w-full bottom-0 flex justify-center items-center px-2 py-2 rounded-bl-lg rounded-br-lg mt-2">
+            <p className="text-[10px] mb:text-[7px] sm:text-[10px] font-extrabold">
+              {items.premium_features.join(", ")}
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="w-full">
@@ -64,16 +71,22 @@ const itemsCard = ({ items }) => {
               </span>
             </div>
 
-            <button className="mr-2 relative flex items-center space-x-1">
-              <span className="bg-gray-400 rounded-full w-4 h-4 absolute -left-1 z-50"></span>
-
-              <span className="bg-black rounded-full w-4 h-4"></span>
-
-              <span className="text-black text-sm font-medium">+1</span>
-            </button>
+            <div className="mr-2 relative flex items-center space-x-1">
+              {items.colors.map((color, index) => (
+                <span
+                  key={color._id}
+                  className={`rounded-full w-4 h-4 border ${
+                    index === 0 ? "absolute -left-1 z-50" : ""
+                  }`}
+                  style={{ backgroundColor: color.name }}
+                ></span>
+              ))}
+              <span className="text-black text-sm font-medium">
+                +{items.colors.length}
+              </span>
+            </div>
           </div>
-
-          {items.connectivity ? (
+          {items.connectivity && (
             <>
               <div className="ml-3 mr-2 mt-1 border border-solid" />
               <div className="ml-3 mt-2 flex items-center gap-x-4">
@@ -85,7 +98,8 @@ const itemsCard = ({ items }) => {
                 </span>
               </div>
             </>
-          ) : (
+          )}{" "}
+          {items.compatibility && (
             <>
               <div className="ml-3 mr-2 mt-1 border border-solid" />
               <div className="ml-3 mt-2 flex items-center gap-x-4">
@@ -95,6 +109,19 @@ const itemsCard = ({ items }) => {
                 </span>
                 <span className="text-xs bg-[#EFF4F7] rounded-sm">
                   Resolution: {items.resolution}
+                </span>
+              </div>
+            </>
+          )}
+          {items.driverType && items.impedance && (
+            <>
+              <div className="ml-3 mr-2 mt-1 border border-solid" />
+              <div className="ml-3 mt-2 flex items-center gap-x-4">
+                <span className="text-xs bg-[#EFF4F7] rounded-sm">
+                  Driver size: {items.driverType}
+                </span>
+                <span className="text-xs bg-[#EFF4F7] rounded-sm">
+                  Impedance: {items.impedance}
                 </span>
               </div>
             </>
