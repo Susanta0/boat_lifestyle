@@ -21,7 +21,7 @@ const baseProductSchema = {
   },
   playbackHours: {
     type: Number,
-    required: true,
+    // required: true,
   },
   rating: {
     type: Number,
