@@ -17,7 +17,9 @@ const itemsCard = ({ items }) => {
         />
         <div className="bg-[#FCC50B] absolute w-full bottom-0 flex justify-center items-center px-2 py-2 rounded-bl-lg rounded-br-lg">
           <p className="text-[10px] mb:text-[7px] sm:text-[10px] font-extrabold">
-            {items.playbackHours} Hours Playback
+            {items.displayType
+              ? `${items.displayType} Screen`
+              : `${items.playbackHours} Hours Playback`}
           </p>
         </div>
       </div>
@@ -71,16 +73,34 @@ const itemsCard = ({ items }) => {
             </button>
           </div>
 
-          <div className="ml-3 mr-2 mt-1 border border-solid" />
-          <div className="ml-3 mt-2 flex items-center gap-x-4">
-            <span className="text-xs bg-[#EFF4F7] rounded-sm">
-              Bluetooth Version: {items.connectivity.bluetooth.version}
-            </span>
-            <span className="text-xs bg-[#EFF4F7] rounded-sm">
-              Range: {items.connectivity.bluetooth.range}
-            </span>
-          </div>
+          {items.connectivity ? (
+            <>
+              <div className="ml-3 mr-2 mt-1 border border-solid" />
+              <div className="ml-3 mt-2 flex items-center gap-x-4">
+                <span className="text-xs bg-[#EFF4F7] rounded-sm">
+                  BT: v{items.connectivity.bluetooth.version}
+                </span>
+                <span className="text-xs bg-[#EFF4F7] rounded-sm">
+                  Range: {items.connectivity.bluetooth.range}
+                </span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="ml-3 mr-2 mt-1 border border-solid" />
+              <div className="ml-3 mt-2 flex items-center gap-x-4">
+                <span className="text-xs bg-[#EFF4F7] rounded-sm">
+                  Compatibility:
+                  {items.compatibility.android === true ? "Android" : "Ios"}
+                </span>
+                <span className="text-xs bg-[#EFF4F7] rounded-sm">
+                  Resolution: {items.resolution}
+                </span>
+              </div>
+            </>
+          )}
         </div>
+
         <button
           onClick={() => navigate(`/products/${items.category}/${items._id}`)}
           className="bg-[#1A2024] text-white py-2 w-full mt-1 rounded-lg"

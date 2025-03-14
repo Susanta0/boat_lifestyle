@@ -63,6 +63,11 @@ const SingleProduct = () => {
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(nextImage, 3000); // Change image every 3 seconds
+    return () => clearInterval(interval);
+  }, [productImages]);
+
   if (loading) {
     return <BoatLoading />;
   }
@@ -95,7 +100,7 @@ const SingleProduct = () => {
 
           {/* Main Product Image with Navigation Arrows */}
           <div className="relative bg-white flex-grow mb-4 md:mb-0">
-            <div className="relative h-80 sm:h-96 md:h-[400px] lg:h-[500px]">
+            <div className="relative h-80 sm:h-96 md:h-[400px] lg:h-[500px] transition-all duration-500 ease-in-out">
               {productImages.length > 0 ? (
                 <img
                   src={productImages[currentImageIndex]}
@@ -177,7 +182,7 @@ const SingleProduct = () => {
           </div>
 
           {/* Product Details Section - Right Side */}
-          <div className="md:w-1/2 md:ml-6 lg:ml-8">
+          <div className="md:w-1/2 md:ml-6 lg:ml-8 overflow-y-auto max-h-[500px]">
             {/* Basic Product Information - Added from the removed section */}
             <div className="px-2 w-full mb-6">
               <div className="flex items-center">
