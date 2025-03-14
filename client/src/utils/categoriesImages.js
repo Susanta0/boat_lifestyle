@@ -60,3 +60,36 @@ export const categoriesImages = [
       "https://www.boat-lifestyle.com/cdn/shop/files/Gaming-Headphones_small.png?v=1684842853",
   },
 ];
+
+export const categoriesVideos = [
+  {
+    id: 1,
+    image:
+      "https://www.boat-lifestyle.com/cdn/shop/files/quinn_RUxbhR7CvjkNtlFUDxgw9.mp4",
+    title: "Smart Watches",
+  },
+  {
+    id: 2,
+    image:
+      "https://www.boat-lifestyle.com/cdn/shop/files/quinn_Bejc8URjU1NSXdhabLCmD.mp4",
+    title: "True Wireless Earbuds",
+  },
+  {
+    id: 3,
+    image:
+      "https://www.boat-lifestyle.com/cdn/shop/files/quinn_OyJHanx4QSdUN3OVGTO7C.mp4",
+    title: "Neckbands",
+  },
+  {
+    id: 4,
+    image:
+      "https://www.boat-lifestyle.com/cdn/shop/files/quinn_CpsRIdJWtpXyFN3enwbXd.mp4",
+    title: "Wireless Headphones",
+  },
+  {
+    id: 5,
+    image:
+      "https://www.boat-lifestyle.com/cdn/shop/files/quinn_j1TwOEeceKYOJc7d7mAim.mp4",
+    title: "Wireless Speakers",
+  },
+];

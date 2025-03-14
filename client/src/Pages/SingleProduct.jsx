@@ -57,7 +57,13 @@ const SingleProduct = () => {
       case "gray":
         return "bg-gray-500";
       case "white":
-        return "bg-white";
+        return "bg-[#FFFFFF]";
+      case "yellow":
+        return "bg-[#FCC50B]";
+      case "till":
+        return "bg-[#85C2AA]";
+      case "green":
+        return "bg-[#08C88F]";
       default:
         return "bg-gray-200";
     }

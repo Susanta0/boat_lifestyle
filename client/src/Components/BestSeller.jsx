@@ -1,39 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductsNameViewAll from "./ProductsNameViewAll";
+import { useNavigate } from "react-router-dom";
+import { categoriesVideos } from "../utils/categoriesImages";
+import axios from "axios";
 
-const sellerData = [
-  {
-    id: 1,
-    image:
-      "https://www.boat-lifestyle.com/cdn/shop/files/quinn_RUxbhR7CvjkNtlFUDxgw9.mp4",
-    title: "Smartwatches",
-  },
-  {
-    id: 2,
-    image:
-      "https://www.boat-lifestyle.com/cdn/shop/files/quinn_RUxbhR7CvjkNtlFUDxgw9.mp4",
-    title: "Smartwatches",
-  },
-  {
-    id: 3,
-    image:
-      "https://www.boat-lifestyle.com/cdn/shop/files/quinn_RUxbhR7CvjkNtlFUDxgw9.mp4",
-    title: "Smartwatches",
-  },
-  {
-    id: 4,
-    image:
-      "https://www.boat-lifestyle.com/cdn/shop/files/quinn_RUxbhR7CvjkNtlFUDxgw9.mp4",
-    title: "Smartwatches",
-  },
-  {
-    id: 5,
-    image:
-      "https://www.boat-lifestyle.com/cdn/shop/files/quinn_RUxbhR7CvjkNtlFUDxgw9.mp4",
-    title: "Smartwatches",
-  },
-];
 const BestSeller = () => {
+  const navigate = useNavigate();
+  const [categoriesData, setCategoriesData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchCategoriesData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios({
+          method: "GET",
+          url: "https://boat-lifestyle-server.onrender.com/api/products/categories",
+        });
+        setCategoriesData(response.data);
+        console.log(response);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategoriesData();
+  }, []);
+
+  // Function to find matching image for a category
+  const getCategoryVideo = (categoryName) => {
+    const categoryVideo = categoriesVideos.find(
+      (item) => item.title.toLowerCase() === categoryName.toLowerCase()
+    );
+
+    // Return the found image or a default image if not found
+    return categoryVideo ? categoryVideo.image : categoriesVideos[4].image;
+  };
+
   return (
     <>
       <ProductsNameViewAll
@@ -43,16 +48,20 @@ const BestSeller = () => {
         text4="View All"
       />
       <div className="introvideo mt-5 flex items-center justify-between gap-x-2 overflow-x-scroll w-[93%] m-auto">
-        {sellerData.map((items, ind) => (
-          <div key={items.id} className="flex flex-col items-center">
+        {categoriesData.slice(0, 5).map((categoryName, ind) => (
+          <div
+            key={categoryName.id}
+            className="flex flex-col items-center"
+            onClick={() => navigate(`/collection/${categoryName}`)}
+          >
             <video
               muted
               className="max-w-[320px] rounded-xl"
-              src={items.image}
+              src={getCategoryVideo(categoryName)}
               onMouseEnter={(e) => e.target.play()}
               onMouseLeave={(e) => e.target.pause()}
             ></video>
-            <p className="font-extrabold text-base">{items.title}</p>
+            <p className="font-extrabold text-base">{categoryName}</p>
           </div>
         ))}
       </div>
