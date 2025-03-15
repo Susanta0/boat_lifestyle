@@ -39,6 +39,19 @@ const cartControllers = {
     }
   },
 
+  getAllProductsInCart: async (req, res) => {
+    try {
+      const user = req.user._id; // Get authenticated user ID from request
+      const cart = await Cart.findOne({ user }).populate("products.productId");
+      if (!cart) {
+        return res.status(404).json({ message: "Cart not found" });
+      }
+      res.json(cart.products);
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  },
+
   addCart: async (req, res) => {
     try {
       const { products } = req.body;
@@ -50,9 +63,17 @@ const cartControllers = {
 
       // Validate each product
       for (const product of products) {
-        if (!product.productId || !product.category || !product.quantity) {
+        if (
+          !product.productId ||
+          !product.category ||
+          !product.name ||
+          !product.beforeOfferPrice ||
+          !product.price ||
+          !product.image ||
+          !product.quantity
+        ) {
           return res.status(400).json({
-            message: "Each product must have productId, category, and quantity",
+            message: "Each product must have all details",
           });
         }
       }
