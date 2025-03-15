@@ -41,7 +41,11 @@ const cartControllers = {
 
   addCart: async (req, res) => {
     try {
-      const cart = new Cart(req.body);
+      const { user, products } = req.body;
+      if (!user) {
+        return res.status(400).json({ message: "User is required" });
+      }
+      const cart = new Cart({ user, products });
       await cart.save();
       res.status(201).json(cart);
     } catch (error) {
