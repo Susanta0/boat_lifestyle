@@ -13,6 +13,22 @@ const cartSchema = new Schema(
           type: Schema.Types.ObjectId,
           required: true,
         },
+        name: {
+          type: String,
+          required: true,
+        },
+        beforeOfferPrice: {
+          type: Number,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+        image: {
+          type: String,
+          required: true,
+        },
         category: {
           type: String,
           required: true,

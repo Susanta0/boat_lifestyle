@@ -12,6 +12,9 @@ router.get("/:id", protect, cartControllers.getCartById);
 // Get carts by user
 router.get("/user/:userId", protect, cartControllers.getCartsByUser);
 
+// Get all products in the authenticated user's cart
+router.get("/products", protect, cartControllers.getAllProductsInCart);
+
 // Add a new cart
 router.post("/", protect, cartControllers.addCart);
 
