@@ -73,7 +73,13 @@ const userController = {
         { expiresIn: "24h" }
       );
 
-      res.json({ token, name: user.name, role: user.role, email: user.email });
+      res.json({
+        token,
+        id: user._id,
+        name: user.name,
+        role: user.role,
+        email: user.email,
+      });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
