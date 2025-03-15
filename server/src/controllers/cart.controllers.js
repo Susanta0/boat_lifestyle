@@ -41,11 +41,39 @@ const cartControllers = {
 
   addCart: async (req, res) => {
     try {
-      const { user, products } = req.body;
-      if (!user) {
-        return res.status(400).json({ message: "User is required" });
+      const { products } = req.body;
+      const user = req.user._id; // Get authenticated user ID from request
+
+      if (!products || !Array.isArray(products) || products.length === 0) {
+        return res.status(400).json({ message: "Products are required" });
       }
-      const cart = new Cart({ user, products });
+
+      // Validate each product
+      for (const product of products) {
+        if (!product.productId || !product.category || !product.quantity) {
+          return res.status(400).json({
+            message: "Each product must have productId, category, and quantity",
+          });
+        }
+      }
+
+      let cart = await Cart.findOne({ user });
+
+      if (!cart) {
+        cart = new Cart({ user, products });
+      } else {
+        products.forEach((newProduct) => {
+          const existingProduct = cart.products.find(
+            (product) => product.productId.toString() === newProduct.productId
+          );
+          if (existingProduct) {
+            existingProduct.quantity += newProduct.quantity;
+          } else {
+            cart.products.push(newProduct);
+          }
+        });
+      }
+
       await cart.save();
       res.status(201).json(cart);
     } catch (error) {
