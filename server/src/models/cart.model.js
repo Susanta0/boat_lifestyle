@@ -9,9 +9,12 @@ const cartSchema = new Schema(
     },
     products: [
       {
-        product: {
+        productId: {
           type: Schema.Types.ObjectId,
-          refPath: "products.category",
+          required: true,
+        },
+        category: {
+          type: String,
           required: true,
         },
         quantity: {
