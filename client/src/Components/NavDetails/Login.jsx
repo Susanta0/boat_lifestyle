@@ -103,14 +103,15 @@ const Login = () => {
 
       const userName = response.data.name || response.data.user.name;
       const token = response.data.token;
+      const userId = response.data._id;
       setIsLoginOpen(false);
-      userLogin(token, userName);
+      userLogin(token, userName, userId);
 
-       // Clear login form
-       setLoginData({ email: "", password: "" });
-       setTimeout(() => {
-         setIsLoading(false);
-       }, 1000);
+      // Clear login form
+      setLoginData({ email: "", password: "" });
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     } catch (error) {
       console.error("Login failed:", error);
       // Close login dialog and open register dialog on failed login
@@ -138,7 +139,7 @@ const Login = () => {
   const handleMouseLeave = () => {
     tooltipTimeout = setTimeout(() => {
       setShowTooltip(false);
-    }, 300); 
+    }, 300);
   };
 
   return (
