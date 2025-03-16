@@ -12,7 +12,7 @@ const cartSchema = new Schema(
         productId: {
           type: Schema.Types.ObjectId,
           required: true,
-          refPath: "onModel", // Use refPath to dynamically reference different models
+          refPath: "products.onModel", // Ensure refPath is correctly set
         },
         onModel: {
           type: String,

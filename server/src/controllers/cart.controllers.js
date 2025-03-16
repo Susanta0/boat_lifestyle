@@ -1,55 +1,33 @@
 const Cart = require("../models/cart.model");
 // Import all possible models
-const TrueWireless = require("../models/products.model");
-const Neckband = require("../models/products.model");
-const SmartWatch = require("../models/products.model");
-const Nirvana = require("../models/products.model");
-const WirelessHeadphones = require("../models/products.model");
-const WirelessSpeakers = require("../models/products.model");
-const WiredHeadphones = require("../models/products.model");
-const WiredEarphones = require("../models/products.model");
-const Soundbar = require("../models/products.model");
-const GamingHeadphones = require("../models/products.model");
+const {
+  TrueWireless,
+  Neckband,
+  SmartWatch,
+  Nirvana,
+  WirelessHeadphones,
+  WirelessSpeakers,
+  WiredHeadphones,
+  WiredEarphones,
+  Soundbar,
+  GamingHeadphones,
+} = require("../models/products.model");
+
+// Create a mapping of categories to models
+const categoryModelMap = {
+  "True Wireless Earbuds": TrueWireless,
+  Neckbands: Neckband,
+  "Smart Watches": SmartWatch,
+  Nirvana: Nirvana,
+  "Wireless Headphones": WirelessHeadphones,
+  "Wireless Speakers": WirelessSpeakers,
+  "Wired Headphones": WiredHeadphones,
+  "Wired Earphones": WiredEarphones,
+  Soundbars: Soundbar,
+  "Gaming Headphones": GamingHeadphones,
+};
 
 const cartControllers = {
-  getAllCarts: async (req, res) => {
-    try {
-      const carts = await Cart.find()
-        .populate("user")
-        .populate("products.product");
-      res.json(carts);
-    } catch (error) {
-      res.status(500).json({ message: "Server error", error: error.message });
-    }
-  },
-
-  getCartById: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const cart = await Cart.findById(id)
-        .populate("user")
-        .populate("products.product");
-      if (!cart) {
-        return res.status(404).json({ message: "Cart not found" });
-      }
-      res.json(cart);
-    } catch (error) {
-      res.status(500).json({ message: "Server error", error: error.message });
-    }
-  },
-
-  getCartsByUser: async (req, res) => {
-    try {
-      const { userId } = req.params;
-      const carts = await Cart.find({ user: userId })
-        .populate("user")
-        .populate("products.product");
-      res.json(carts);
-    } catch (error) {
-      res.status(500).json({ message: "Server error", error: error.message });
-    }
-  },
-
   getAllProductsInCart: async (req, res) => {
     try {
       const user = req.user._id; // Get authenticated user ID from request
@@ -62,41 +40,11 @@ const cartControllers = {
       // Manually fetch product details
       const products = await Promise.all(
         cart.products.map(async (item) => {
-          let product;
-          switch (item.onModel) {
-            case "TrueWireless":
-              product = await TrueWireless.findById(item.productId);
-              break;
-            case "Neckband":
-              product = await Neckband.findById(item.productId);
-              break;
-            case "SmartWatch":
-              product = await SmartWatch.findById(item.productId);
-              break;
-            case "Nirvana":
-              product = await Nirvana.findById(item.productId);
-              break;
-            case "WirelessHeadphones":
-              product = await WirelessHeadphones.findById(item.productId);
-              break;
-            case "WirelessSpeakers":
-              product = await WirelessSpeakers.findById(item.productId);
-              break;
-            case "WiredHeadphones":
-              product = await WiredHeadphones.findById(item.productId);
-              break;
-            case "WiredEarphones":
-              product = await WiredEarphones.findById(item.productId);
-              break;
-            case "Soundbar":
-              product = await Soundbar.findById(item.productId);
-              break;
-            case "GamingHeadphones":
-              product = await GamingHeadphones.findById(item.productId);
-              break;
-            default:
-              throw new Error(`Unknown model: ${item.onModel}`);
+          const Model = categoryModelMap[item.category];
+          if (!Model) {
+            throw new Error(`Unknown category: ${item.category}`);
           }
+          const product = await Model.findById(item.productId);
           return {
             ...item.toObject(),
             product,
@@ -155,35 +103,6 @@ const cartControllers = {
 
       await cart.save();
       res.status(201).json(cart);
-    } catch (error) {
-      res.status(500).json({ message: "Server error", error: error.message });
-    }
-  },
-
-  updateCart: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const cart = await Cart.findByIdAndUpdate(id, req.body, {
-        new: true,
-        runValidators: true,
-      });
-      if (!cart) {
-        return res.status(404).json({ message: "Cart not found" });
-      }
-      res.json(cart);
-    } catch (error) {
-      res.status(500).json({ message: "Server error", error: error.message });
-    }
-  },
-
-  deleteCart: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const cart = await Cart.findByIdAndDelete(id);
-      if (!cart) {
-        return res.status(404).json({ message: "Cart not found" });
-      }
-      res.json({ message: "Cart deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });
     }
