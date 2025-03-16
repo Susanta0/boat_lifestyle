@@ -71,15 +71,15 @@ const cartControllers = {
       for (const product of products) {
         if (
           !product.productId ||
-          !product.category ||
           !product.name ||
           !product.beforeOfferPrice ||
           !product.price ||
           !product.image ||
-          !product.quantity
+          !product.quantity ||
+          !product.onModel // Ensure onModel is included
         ) {
           return res.status(400).json({
-            message: "Each product must have all details",
+            message: "Each product must have all details, including onModel",
           });
         }
       }
