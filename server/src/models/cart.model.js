@@ -12,6 +12,23 @@ const cartSchema = new Schema(
         productId: {
           type: Schema.Types.ObjectId,
           required: true,
+          refPath: "onModel", // Use refPath to dynamically reference different models
+        },
+        onModel: {
+          type: String,
+          required: true,
+          enum: [
+            "TrueWireless",
+            "Neckband",
+            "SmartWatch",
+            "Nirvana",
+            "WirelessHeadphones",
+            "WirelessSpeakers",
+            "WiredHeadphones",
+            "WiredEarphones",
+            "Soundbar",
+            "GamingHeadphones",
+          ], // List all possible models here
         },
         name: {
           type: String,

@@ -1,4 +1,15 @@
 const Cart = require("../models/cart.model");
+// Import all possible models
+const TrueWireless = require("../models/products.model");
+const Neckband = require("../models/products.model");
+const SmartWatch = require("../models/products.model");
+const Nirvana = require("../models/products.model");
+const WirelessHeadphones = require("../models/products.model");
+const WirelessSpeakers = require("../models/products.model");
+const WiredHeadphones = require("../models/products.model");
+const WiredEarphones = require("../models/products.model");
+const Soundbar = require("../models/products.model");
+const GamingHeadphones = require("../models/products.model");
 
 const cartControllers = {
   getAllCarts: async (req, res) => {
@@ -42,11 +53,58 @@ const cartControllers = {
   getAllProductsInCart: async (req, res) => {
     try {
       const user = req.user._id; // Get authenticated user ID from request
-      const cart = await Cart.findOne({ user }).populate("products.productId");
+      const cart = await Cart.findOne({ user });
+
       if (!cart) {
         return res.status(404).json({ message: "Cart not found" });
       }
-      res.json(cart.products);
+
+      // Manually fetch product details
+      const products = await Promise.all(
+        cart.products.map(async (item) => {
+          let product;
+          switch (item.onModel) {
+            case "TrueWireless":
+              product = await TrueWireless.findById(item.productId);
+              break;
+            case "Neckband":
+              product = await Neckband.findById(item.productId);
+              break;
+            case "SmartWatch":
+              product = await SmartWatch.findById(item.productId);
+              break;
+            case "Nirvana":
+              product = await Nirvana.findById(item.productId);
+              break;
+            case "WirelessHeadphones":
+              product = await WirelessHeadphones.findById(item.productId);
+              break;
+            case "WirelessSpeakers":
+              product = await WirelessSpeakers.findById(item.productId);
+              break;
+            case "WiredHeadphones":
+              product = await WiredHeadphones.findById(item.productId);
+              break;
+            case "WiredEarphones":
+              product = await WiredEarphones.findById(item.productId);
+              break;
+            case "Soundbar":
+              product = await Soundbar.findById(item.productId);
+              break;
+            case "GamingHeadphones":
+              product = await GamingHeadphones.findById(item.productId);
+              break;
+            default:
+              throw new Error(`Unknown model: ${item.onModel}`);
+          }
+          return {
+            ...item.toObject(),
+            product,
+          };
+        })
+      );
+
+      res.json(products);
     } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });
     }
