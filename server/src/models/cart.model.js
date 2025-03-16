@@ -34,6 +34,10 @@ const cartSchema = new Schema(
           type: String,
           required: true,
         },
+        category: {
+          type: String,
+          required: true,
+        },
         beforeOfferPrice: {
           type: Number,
           required: true,
