@@ -27,6 +27,19 @@ const categoryModelMap = {
   "Gaming Headphones": GamingHeadphones,
 };
 
+const categoryToModelMap = {
+  "True Wireless Earbuds": "TrueWireless",
+  Neckbands: "Neckband",
+  "Smart Watches": "SmartWatch",
+  Nirvana: "Nirvana",
+  "Wireless Headphones": "WirelessHeadphones",
+  "Wireless Speakers": "WirelessSpeakers",
+  "Wired Headphones": "WiredHeadphones",
+  "Wired Earphones": "WiredEarphones",
+  Soundbars: "Soundbar",
+  "Gaming Headphones": "GamingHeadphones",
+};
+
 const cartControllers = {
   getAllProductsInCart: async (req, res) => {
     try {
@@ -72,6 +85,7 @@ const cartControllers = {
         if (
           !product.productId ||
           !product.name ||
+          !product.category ||
           !product.beforeOfferPrice ||
           !product.price ||
           !product.image ||
@@ -96,6 +110,7 @@ const cartControllers = {
           if (existingProduct) {
             existingProduct.quantity += newProduct.quantity;
           } else {
+            newProduct.onModel = categoryToModelMap[newProduct.category]; // Map category to model
             cart.products.push(newProduct);
           }
         });
