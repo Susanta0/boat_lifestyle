@@ -14,6 +14,13 @@ router.get("/products", protect, cartControllers.getAllProductsInCart);
 // Add a new cart
 router.post("/", protect, cartControllers.addCart);
 
+// Remove a product from the cart
+router.delete(
+  "/products/:productId",
+  protect,
+  cartControllers.removeProductFromCart
+);
+
 // Removed routes
 // router.put("/:id", protect, cartControllers.updateCart);
 // router.delete("/:id", protect, cartControllers.deleteCart);

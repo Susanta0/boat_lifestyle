@@ -109,6 +109,7 @@ const cartControllers = {
           );
           if (existingProduct) {
             existingProduct.quantity += newProduct.quantity;
+            existingProduct.price += newProduct.price;
           } else {
             newProduct.onModel = categoryToModelMap[newProduct.category]; // Map category to model
             cart.products.push(newProduct);
@@ -118,6 +119,28 @@ const cartControllers = {
 
       await cart.save();
       res.status(201).json(cart);
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  },
+
+  removeProductFromCart: async (req, res) => {
+    try {
+      const user = req.user._id;
+      const { productId } = req.params;
+
+      let cart = await Cart.findOne({ user });
+
+      if (!cart) {
+        return res.status(404).json({ message: "Cart not found" });
+      }
+
+      cart.products = cart.products.filter(
+        (product) => product.productId.toString() !== productId
+      );
+
+      await cart.save();
+      res.status(200).json({ message: "Product removed from cart" });
     } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });
     }
