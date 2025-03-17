@@ -145,6 +145,37 @@ const cartControllers = {
       res.status(500).json({ message: "Server error", error: error.message });
     }
   },
+
+  updateProductQuantityInCart: async (req, res) => {
+    try {
+      const user = req.user._id;
+      const { productId } = req.params;
+      const { quantity, price } = req.body;
+
+      let cart = await Cart.findOne({ user });
+
+      if (!cart) {
+        return res.status(404).json({ message: "Cart not found" });
+      }
+
+      const product = cart.products.find(
+        (product) => product.productId.toString() === productId
+      );
+
+      if (!product) {
+        return res.status(404).json({ message: "Product not found in cart" });
+      }
+
+      const basePrice = product.price / product.quantity; // Calculate base price from current price and quantity
+      product.quantity = quantity;
+      product.price = basePrice * quantity;
+
+      await cart.save();
+      res.status(200).json({ message: "Product quantity updated" });
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  },
 };
 
 module.exports = cartControllers;
