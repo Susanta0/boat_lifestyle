@@ -21,6 +21,13 @@ router.delete(
   cartControllers.removeProductFromCart
 );
 
+// Update the quantity of a product in the cart
+router.put(
+  "/products/:productId",
+  protect,
+  cartControllers.updateProductQuantityInCart
+);
+
 // Removed routes
 // router.put("/:id", protect, cartControllers.updateCart);
 // router.delete("/:id", protect, cartControllers.deleteCart);
