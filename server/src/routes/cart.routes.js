@@ -3,11 +3,6 @@ const { protect, isAdmin } = require("../middleware/authmiddleware");
 const cartControllers = require("../controllers/cart.controllers");
 const router = express.Router();
 
-// Removed routes
-// router.get("/", protect, isAdmin, cartControllers.getAllCarts);
-// router.get("/:id", protect, cartControllers.getCartById);
-// router.get("/user/:userId", protect, cartControllers.getCartsByUser);
-
 // Get all products in the authenticated user's cart
 router.get("/products", protect, cartControllers.getAllProductsInCart);
 
@@ -28,8 +23,7 @@ router.put(
   cartControllers.updateProductQuantityInCart
 );
 
-// Removed routes
-// router.put("/:id", protect, cartControllers.updateCart);
-// router.delete("/:id", protect, cartControllers.deleteCart);
+// Delete all products from the cart
+router.delete("/", protect, cartControllers.clearCart);
 
 module.exports = router;

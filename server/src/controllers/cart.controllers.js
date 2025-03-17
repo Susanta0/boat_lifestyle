@@ -176,6 +176,23 @@ const cartControllers = {
       res.status(500).json({ message: "Server error", error: error.message });
     }
   },
+
+  clearCart: async (req, res) => {
+    try {
+      const user = req.user._id;
+      let cart = await Cart.findOne({ user });
+
+      if (!cart) {
+        return res.status(404).json({ message: "Cart not found" });
+      }
+
+      cart.products = [];
+      await cart.save();
+      res.status(200).json({ message: "Cart cleared" });
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  },
 };
 
 module.exports = cartControllers;

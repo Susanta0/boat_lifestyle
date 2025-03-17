@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { BoatLoading } from "../Components/ProductCardSkeleton";
+import { AuthContex } from "../Context/AuthContextProvider";
+import { ToastContainer, toast } from "react-toastify";
 
 const SingleProduct = () => {
   const { category, id } = useParams();
@@ -10,14 +12,18 @@ const SingleProduct = () => {
   const [loading, setLoading] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState("popular");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { loginStatus } = useContext(AuthContex);
+  const navigate = useNavigate();
+  const [deliveryPin, setDeliveryPin] = useState("122008");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          `https://boat-lifestyle-server.onrender.com/api/products/category/${category}/${id}`
-        );
+        const response = await axios({
+          method: "GET",
+          url: `https://boat-lifestyle-server.onrender.com/api/products/category/${category}/${id}`,
+        });
         setProduct(response.data);
         console.log(response.data);
         setLoading(false);
@@ -74,12 +80,78 @@ const SingleProduct = () => {
     return () => clearInterval(interval);
   }, [productImages]);
 
+  const categoryToModelMap = {
+    "True Wireless Earbuds": "TrueWireless",
+    Neckbands: "Neckband",
+    "Smart Watches": "SmartWatch",
+    Nirvana: "Nirvana",
+    "Wireless Headphones": "WirelessHeadphones",
+    "Wireless Speakers": "WirelessSpeakers",
+    "Wired Headphones": "WiredHeadphones",
+    "Wired Earphones": "WiredEarphones",
+    Soundbars: "Soundbar",
+    "Gaming Headphones": "GamingHeadphones",
+  };
+
+  const addToCart = async () => {
+    if (!loginStatus.token) {
+      toast("Please log in to add items to the cart.");
+      return;
+    }
+    try {
+      const response = await axios({
+        method: "POST",
+        url: `https://boat-lifestyle-server.onrender.com/api/carts`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${loginStatus.token}`,
+        },
+        data: {
+          products: [
+            {
+              productId: product._id,
+              name: product.name,
+              category: product.category,
+              price: product.price,
+              beforeOfferPrice: product.beforeOfferPrice,
+              image: product.image,
+              quantity: 1,
+              onModel: categoryToModelMap[product.category], // Map category to model
+            },
+          ],
+        },
+      });
+      console.log("Product added to cart:", response.data);
+    } catch (error) {
+      toast("Error adding product to cart.");
+      console.error("Error adding product to cart:", error);
+    }
+  };
+
+  const buyNow = async () => {
+    if (!loginStatus.token) {
+      toast("Please log in to proceed with the purchase.");
+      return;
+    }
+    try {
+      await addToCart(); // Reuse the addToCart function
+      navigate("/address"); // Redirect to the cart page
+    } catch (error) {
+      console.error("Error during buy now process:", error);
+    }
+  };
+
+  const handlePinChange = (e) => {
+    setDeliveryPin(e.target.value);
+  };
+
   if (loading) {
     return <BoatLoading />;
   }
 
   return (
     <>
+      <ToastContainer />
       <div className="mt-36 max-w-6xl mx-auto bg-gray-50 p-4 md:p-6">
         {/* Product Image and Details Section */}
         <div className="flex flex-col md:flex-row mb-8">
@@ -270,7 +342,8 @@ const SingleProduct = () => {
                   <div className="flex items-center mb-2">
                     <input
                       type="text"
-                      value="122008"
+                      value={deliveryPin}
+                      onChange={handlePinChange}
                       className="border-b-2 border-gray-300 bg-transparent py-1 w-24 focus:outline-none"
                     />
                     <button className="bg-black text-white px-4 py-1 rounded-md ml-4">
@@ -427,10 +500,16 @@ const SingleProduct = () => {
                 Personalise your product
               </div>
               <div className="flex gap-3 mt-2">
-                <button className="flex-1 bg-gray-800 text-white py-3 px-4 rounded-lg font-medium">
+                <button
+                  className="flex-1 bg-gray-800 text-white py-3 px-4 rounded-lg font-medium"
+                  onClick={addToCart}
+                >
                   Add To Cart
                 </button>
-                <button className="flex-1 bg-green-500 text-white py-3 px-4 rounded-lg font-medium">
+                <button
+                  className="flex-1 bg-green-500 text-white py-3 px-4 rounded-lg font-medium"
+                  onClick={buyNow}
+                >
                   Buy Now
                 </button>
               </div>
