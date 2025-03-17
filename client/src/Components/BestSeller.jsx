@@ -50,7 +50,7 @@ const BestSeller = () => {
       <div className="introvideo mt-5 flex items-center justify-between gap-x-2 overflow-x-scroll w-[93%] m-auto">
         {categoriesData.slice(0, 5).map((categoryName, ind) => (
           <div
-            key={categoryName.id}
+            key={ind}
             className="flex flex-col items-center"
             onClick={() => navigate(`/collection/${categoryName}`)}
           >

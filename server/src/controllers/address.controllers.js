@@ -33,6 +33,16 @@ const addressControllers = {
       res.status(500).json({ message: "Server error", error: error.message });
     }
   },
+
+  getAllAddresses: async (req, res) => {
+    try {
+      const user = req.user._id;
+      const addresses = await Address.find({ user });
+      res.status(200).json(addresses);
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  },
 };
 
 module.exports = addressControllers;
