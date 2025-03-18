@@ -53,42 +53,7 @@ let footerData = [
 ];
 const Footer1 = () => {
   return (
-    // <div className="mx-0.5 mt-0.5 m-auto px-16 py-16 bg-[#E7F0F5] grid grid-flow-col">
-    //   <div className="">
-    //     <img
-    //       className="w-[151px]"
-    //       src="https://cdn.shopify.com/s/files/1/0057/8938/4802/files/boAt_logo_black_830768d4-b3b0-4bef-8d5c-494df9bd6cbc.svg?v=1732875809"
-    //       alt=""
-    //     />
-    //     <h2 className="font-extrabold text-2xl mt-8">
-    //       Subscribe to our email alerts!
-    //     </h2>
-    //     <div className="relative border max-w-[23em] h-12 rounded-md bg-white flex">
-    //       <input
-    //         type="email"
-    //         placeholder="Enter your email address"
-    //         className="rounded-md h-full w-[87%] outline-none pl-4 pr-1"
-    //       />
-    //       <TfiArrowCircleRight className="h-6 w-6 text-gray-400 absolute top-1/2 transform -translate-y-1/2 right-6" />
-    //     </div>
-    //   </div>
-    //   <div className=" flex gap-28 ">
-    //     {footerData.map((item, ind) => (
-    //       <div key={ind}>
-    //           <p className="font-extrabold text-black text-xs">{item.name}</p>
-    //           <ul className="space-y-4 mt-6">
-    //             {item[item.name].map((listItem, index) => (
-    //               <li key={index} className="text-xs font-thin">{listItem}</li>
-    //             ))}
-    //           </ul>
-            
-    //       </div>
-    //     ))}
-    //   </div>
-    // </div>
-
-
-<div className="bg-[#E7F0F5] w-full">
+    <div className="bg-[#E7F0F5] w-full">
       <div className="container mx-auto px-4 py-8 md:py-16">
         {/* Main footer content wrapper */}
         <div className="flex flex-col lg:flex-row lg:justify-between gap-8">
@@ -108,9 +73,7 @@ const Footer1 = () => {
                 placeholder="Enter your email address"
                 className="rounded-md h-full w-full outline-none pl-4 pr-12"
               />
-              <TfiArrowCircleRight 
-                className="h-5 w-5 md:h-6 md:w-6 text-gray-400 absolute top-1/2 transform -translate-y-1/2 right-4"
-              />
+              <TfiArrowCircleRight className="h-5 w-5 md:h-6 md:w-6 text-gray-400 absolute top-1/2 transform -translate-y-1/2 right-4" />
             </div>
           </div>
 
