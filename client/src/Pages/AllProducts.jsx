@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import DisplayProducts from "../Components/DisplayProducts";
 import { BoatLoading } from "../Components/ProductCardSkeleton";
 import ProductCard from "../Components/CategoriesProductCard/ProductCard";
+import SocialMedia from "../Components/Footer/socialMedia";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -29,12 +29,14 @@ const AllProducts = () => {
       {loading ? (
         <BoatLoading />
       ) : (
-        <div className="mt-40 grid grid-cols-1 mb:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mt-14 grid grid-cols-1 mb:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {products.map((items, ind) => (
             <ProductCard key={items._id} items={items} />
           ))}
         </div>
       )}
+      <br />
+      <SocialMedia />
     </>
   );
 };

@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductCard from "../Components/CategoriesProductCard/ProductCard";
-import Footer from "../Components/Footer/Footer";
 import { ItemsCardSkeleton } from "../Components/ProductCardSkeleton";
+import SocialMedia from "../Components/Footer/socialMedia";
 
 const ProductCollection = () => {
   const { category } = useParams();
@@ -28,7 +28,7 @@ const ProductCollection = () => {
   }, []);
   return (
     <>
-      <div className="mx-10 mt-36">
+      <div className="mx-10 mt-14">
         <h2 className="text-2xl font-extrabold">{category}</h2>
         {loading ? (
           <div className="mt-10 grid grid-cols-1 mb:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -44,7 +44,8 @@ const ProductCollection = () => {
           </div>
         )}
       </div>
-      {/* <Footer /> */}
+      <br />
+      <SocialMedia />
     </>
   );
 };

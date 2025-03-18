@@ -5,6 +5,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { BoatLoading } from "../Components/ProductCardSkeleton";
 import { AuthContext } from "../Context/AuthContextProvider";
 import { ToastContainer, toast } from "react-toastify";
+import Blogs from "../Components/Blogs";
+import SocialMedia from "../Components/Footer/socialMedia";
 
 const SingleProduct = () => {
   const { category, id } = useParams();
@@ -152,7 +154,7 @@ const SingleProduct = () => {
   return (
     <>
       <ToastContainer />
-      <div className="mt-36 max-w-6xl mx-auto bg-gray-50 p-4 md:p-6">
+      <div className="mt-14 max-w-6xl mx-auto bg-gray-50 p-4 md:p-6">
         {/* Product Image and Details Section */}
         <div className="flex flex-col md:flex-row mb-8">
           {/* Thumbnails - Visible on md and larger screens */}
@@ -517,6 +519,9 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
+      <Blogs />
+      <br />
+      <SocialMedia />
     </>
   );
 };
