@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa6";
 import { useParams, useNavigate } from "react-router-dom";
 import { BoatLoading } from "../Components/ProductCardSkeleton";
-import { AuthContex } from "../Context/AuthContextProvider";
+import { AuthContext } from "../Context/AuthContextProvider";
 import { ToastContainer, toast } from "react-toastify";
 
 const SingleProduct = () => {
@@ -12,7 +12,7 @@ const SingleProduct = () => {
   const [loading, setLoading] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState("popular");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const { loginStatus } = useContext(AuthContex);
+  const { loginStatus } = useContext(AuthContext);
   const navigate = useNavigate();
   const [deliveryPin, setDeliveryPin] = useState("122008");
 

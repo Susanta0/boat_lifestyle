@@ -1,6 +1,6 @@
 import React from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Search from "./NavDetails/Search";
 import Login from "./NavDetails/Login";
 import Cart from "./NavDetails/Cart";
@@ -28,6 +28,7 @@ const navData = [
 ];
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="fixed top-10 left-0 w-full bg-white z-50 2xl:h-[83.2px] xl:h-[83.2px] h-[128px] flex items-center justify-between px-10">
@@ -35,6 +36,7 @@ const Navbar = () => {
         <GiHamburgerMenu className="2xl:hidden xl:hidden lg:block md:block sm:block mb:block hidden h-6 w-6" />
         {/* logo of Boat */}
         <img
+          onClick={() => navigate("/")}
           className="mb:max-w-16 sm:max-w-24 md:max-w-24 lg:max-w-24 xl:max-w-24 2xl:max-w-24 max-h-max cursor-pointer"
           src="/boAt_logo_small_3067da8c-a83b-46dd-b28b-6ef1e16ccd17_small.svg"
           alt="Boat_logo"
