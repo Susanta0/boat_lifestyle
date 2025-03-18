@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AuthContex } from "../Context/AuthContextProvider";
+import { AuthContext } from "../Context/AuthContextProvider";
 
 const AdressPage = () => {
   const [address, setAddress] = useState({
@@ -15,7 +15,7 @@ const AdressPage = () => {
     phoneNumber: "",
   });
   const [savedAddresses, setSavedAddresses] = useState([]);
-  const { loginStatus } = useContext(AuthContex);
+  const { loginStatus } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {

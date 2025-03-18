@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { FaStar } from "react-icons/fa6";
 import ProductDetails from "./ProductDetails";
 import axios from "axios";
 import ProductCardSkeleton from "./ProductCardSkeleton";

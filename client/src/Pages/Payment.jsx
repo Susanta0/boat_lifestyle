@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { AuthContex } from "../Context/AuthContextProvider";
+import { AuthContext } from "../Context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
 
 const Payment = () => {
   const [totalAmount, setTotalAmount] = useState(0);
-  const { loginStatus } = useContext(AuthContex);
+  const { loginStatus } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
+  const apiKey = process.env.REACT_APP_API_KEY;
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -21,6 +23,7 @@ const Payment = () => {
           }
         );
         const cartItems = response.data;
+        setCartItems(cartItems);
         const total = cartItems.reduce((sum, item) => sum + item.price, 0);
         setTotalAmount(total);
       } catch (error) {
@@ -51,7 +54,7 @@ const Payment = () => {
 
       if (window.Razorpay) {
         const options = {
-          key: "rzp_test_6HJefMPHddi1RG", // Your Razorpay key ID
+          key: apiKey, // Your Razorpay key ID
           amount, // Amount to be paid (in the smallest currency unit, e.g., paise for INR)
           currency, // Currency code (e.g., "INR")
           name: "Boat Lifestyle", // Name to be displayed on the payment interface
@@ -61,6 +64,21 @@ const Payment = () => {
             // Function to handle the response after payment
             alert(
               `Payment successful! Payment ID: ${response.razorpay_payment_id}`
+            );
+            // Save order details
+            await axios.post(
+              "https://boat-lifestyle-server.onrender.com/api/orders",
+              {
+                products: cartItems,
+                totalAmount,
+                order_id, // Include order_id
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${loginStatus.token}`,
+                },
+              }
             );
             // Delete products from cart
             await axios.delete(
@@ -73,8 +91,7 @@ const Payment = () => {
               }
             );
             // Navigate to order details page
-            // navigate("/orderdetails", { state: { order_id } });
-            navigate("/");
+            navigate("/orderdetails", { state: { order_id } });
           },
           prefill: {
             // Prefill details for the user
@@ -84,7 +101,7 @@ const Payment = () => {
           },
           notes: {
             // Additional notes
-            address: "Test Address", // Address note
+            address: "Test Address",
           },
           theme: {
             // Theme customization

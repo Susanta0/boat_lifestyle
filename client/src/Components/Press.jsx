@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ProductsNameViewAll from "./ProductsNameViewAll";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 const sliderData = [
   {

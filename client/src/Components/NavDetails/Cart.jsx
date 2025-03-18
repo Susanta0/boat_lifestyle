@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoCloseOutline } from "react-icons/io5";
 import axios from "axios";
-import { AuthContex } from "../../Context/AuthContextProvider";
+import { AuthContext } from "../../Context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const { loginStatus } = useContext(AuthContex);
+  const { loginStatus } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const toggleCart = () => {
@@ -109,6 +109,12 @@ const Cart = () => {
 
   const navigateToAddress = () => {
     navigate("/address");
+    toggleCart();
+  };
+
+  const navigateToHome = () => {
+    navigate("/");
+    toggleCart();
   };
 
   return (
@@ -338,7 +344,7 @@ const Cart = () => {
 
                 {/* Start Shopping Button */}
                 <button
-                  onClick={() => navigate("/")}
+                  onClick={navigateToHome}
                   className="mt-4 px-4 sm:px-6 py-2 sm:py-3 bg-gray-800 text-white text-sm sm:text-base rounded-lg hover:bg-gray-700 transition"
                 >
                   Start Shopping
