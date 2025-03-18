@@ -47,12 +47,7 @@ const Press = () => {
   };
   return (
     <>
-      <ProductsNameViewAll
-        text1="In the"
-        // text2="the"
-        text3="Press"
-        text4="View All"
-      />
+      <ProductsNameViewAll text1="In the" text3="Press" text4={null} />
       <div className="flex flex-col items-center relative w-[95%] mx-auto mb:px-2 sm:px-4 md:px-6 lg:px-8">
         <div className="relative overflow-hidden w-full h-[300px] mb:h-[400px] md:h-[300px]">
           {sliderData.map((ele, index) => (

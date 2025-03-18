@@ -6,7 +6,7 @@ const Blogs = () => {
   const [show, setShow] = useState(1);
   return (
     <>
-      <ProductsNameViewAll text1="" text2="" text3="Blogs" text4="View All" />
+      <ProductsNameViewAll text1="" text2="" text3="Blogs" text4={null} />
       <div className="mt-3">
         <ul className="flex items-center gap-x-6 px-10">
           <li

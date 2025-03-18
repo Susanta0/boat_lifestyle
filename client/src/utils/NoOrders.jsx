@@ -4,15 +4,14 @@ import { FaArrowLeft, FaShoppingBag, FaShoppingCart } from "react-icons/fa";
 
 const NoOrders = () => {
   const navigate = useNavigate();
-  // const { category } = useParams();
 
   const handleBack = () => {
     navigate("/");
   };
 
-  // const handleShopNow = () => {
-  //   navigate(`/collection/${category}`);
-  // };
+  const handleShopNow = () => {
+    navigate(`/all_products`);
+  };
 
   return (
     <div className="pt-24 px-4 min-h-screen bg-gray-50">
@@ -57,12 +56,12 @@ const NoOrders = () => {
                 <FaArrowLeft className="mr-2" /> Return to Home
               </button>
 
-              {/* <button
+              <button
                 onClick={handleShopNow}
                 className="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 font-medium flex items-center justify-center"
               >
                 <FaShoppingCart className="mr-2" /> Start Shopping
-              </button> */}
+              </button>
             </div>
           </div>
         </div>
