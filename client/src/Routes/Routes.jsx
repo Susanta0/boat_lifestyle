@@ -7,6 +7,7 @@ import AdressPage from "../Pages/AdressPage";
 import Payment from "../Pages/Payment";
 import OrderDetails from "../Pages/OrderDetails";
 import Protect from "../Protect/Protect";
+import AllProducts from "../Pages/AllProducts";
 
 const AllRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const AllRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/collection/:category" element={<ProductCollection />} />
         <Route path="/products/:category/:id" element={<SingleProduct />} />
+        <Route path="/all_products" element={<AllProducts />} />
         <Route
           path="/address"
           element={

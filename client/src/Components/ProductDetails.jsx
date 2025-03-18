@@ -1,5 +1,6 @@
 import React from "react";
 import { FaStar } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetails = ({
   image,
@@ -9,9 +10,16 @@ const ProductDetails = ({
   price,
   beforeOfferPrice,
   discountPercentage,
+  colors,
+  category,
+  _id,
 }) => {
+  const navigate = useNavigate();
   return (
-    <div className="relative">
+    <div
+      onClick={() => navigate(`/products/${category}/${_id}`)}
+      className="relative"
+    >
       <div className="relative rounded">
         <p className="absolute py-[1.5px] px-2 text-[10px] text-white bg-black rounded-tl-xl rounded-tr rounded-br">
           🎉 New Launch
@@ -40,13 +48,20 @@ const ProductDetails = ({
         <div className="ml-3 mr-2 border border-dashed" />
         <div className="mt-2 flex justify-between">
           <p className="font-extrabold ml-3">₹ {price}</p>
-          <button className="mr-2 relative flex items-center space-x-1">
-            <span className="bg-gray-400 rounded-full w-4 h-4 absolute -left-1 z-50"></span>
-
-            <span className="bg-black rounded-full w-4 h-4"></span>
-
-            <span className="text-black text-sm font-medium">+1</span>
-          </button>
+          <div className="mr-2 relative flex items-center space-x-1">
+            {colors.map((color, index) => (
+              <span
+                key={color._id}
+                className={`rounded-full w-4 h-4 border ${
+                  index === 0 ? "absolute -left-1 z-50" : ""
+                }`}
+                style={{ backgroundColor: color.name }}
+              ></span>
+            ))}
+            <span className="text-black text-sm font-medium">
+              +{colors.length}
+            </span>
+          </div>
         </div>
         <span className="ml-3 text-[10px] text text-[#B2C4DA] space-x-1">
           <span className="line-through">{beforeOfferPrice} </span>
