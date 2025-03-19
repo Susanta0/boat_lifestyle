@@ -168,7 +168,7 @@ const Login = () => {
             />
             {loginStatus.isLoggedIn && showTooltip && (
               <div
-                className="absolute z-50 top-8 right-0 bg-white border border-gray-200 rounded-lg shadow-xl w-64 py-3 px-4"
+                className="absolute z-50 top-8 right-0 bg-white border border-gray-200 rounded-lg shadow-xl w-56 mb:w-64 py-3 px-4"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
@@ -176,7 +176,7 @@ const Login = () => {
                   <div className="h-8 w-8 bg-gray-100 rounded-full flex items-center justify-center">
                     <FaRegUser className="h-4 w-4 text-gray-600" />
                   </div>
-                  <div className="font-medium text-gray-800">
+                  <div className="font-medium text-gray-800 truncate">
                     {loginStatus.userName}
                   </div>
                 </div>
@@ -202,18 +202,18 @@ const Login = () => {
 
           {/* Combined Login/Register Modal with Left Side Content */}
           {(isLoginOpen || isRegisterOpen) && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-              <div className="bg-white rounded-lg w-full max-w-5xl relative flex flex-col md:flex-row overflow-hidden">
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 mb:p-3 sm:p-4 z-50">
+              <div className="bg-white rounded-lg w-full max-w-xl mb:max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl relative flex flex-col md:flex-row overflow-hidden">
                 {/* Close button */}
                 <button
                   onClick={() => {
                     setIsLoginOpen(false);
                     setIsRegisterOpen(false);
                   }}
-                  className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 z-10"
+                  className="absolute right-2 top-2 mb:right-3 mb:top-3 sm:right-4 sm:top-4 text-gray-500 hover:text-gray-700 z-10"
                 >
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5 mb:w-6 mb:h-6"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -227,80 +227,103 @@ const Login = () => {
                   </svg>
                 </button>
 
-                {/* Left side content (from the image) */}
-                <div className="w-full md:w-1/2 bg-gray-200 p-4 md:p-8 flex flex-col items-center justify-center">
-                  <div className="w-full max-w-xs">
+                {/* Left side content (brand and benefits) - Hidden on small screens */}
+                <div className="hidden md:block w-1/2 bg-gradient-to-br from-blue-50 to-gray-200 p-4 md:p-6 lg:p-8  flex-col items-center justify-center">
+                  <div className="w-full max-w-xs mx-auto">
                     {/* Brand logo */}
-                    <div className="mb-4 md:mb-8 flex justify-center">
+                    <div className="mb-4 md:mb-6 lg:mb-8 flex justify-center">
                       <img
-                        className="h-16 md:h-24 w-16 md:w-24"
+                        className="h-14 md:h-16 lg:h-20 w-auto"
                         src="https://d1nl4izteao6lk.cloudfront.net/uploads/1717587342763_logo%20png_.png"
-                        alt=""
+                        alt="Brand Logo"
                       />
                     </div>
 
                     {/* Welcome text */}
-                    <h2 className="text-xl md:text-2xl font-bold mb-6 md:mb-12 text-center">
+                    <h2 className="text-lg md:text-xl lg:text-2xl font-bold mb-4 md:mb-8 lg:mb-10 text-center text-gray-800">
                       Welcome! Register to avail the best deals!
                     </h2>
 
                     {/* Benefits */}
                     <div className="grid grid-cols-1 gap-3 md:gap-4">
-                      <div className="bg-gray-100 p-3 md:p-4 rounded-lg text-center">
-                        <div className="flex justify-center mb-2">
-                          <div className="h-8 md:h-10 w-8 md:w-10 bg-gray-300 rounded-full flex items-center justify-center">
+                      <div className="bg-white bg-opacity-80 p-3 md:p-4 rounded-lg shadow-sm transition-all duration-300 hover:shadow-md hover:bg-opacity-100">
+                        <div className="flex items-center">
+                          <div className="h-8 md:h-10 w-8 md:w-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                             <img
                               className="h-4 md:h-5 w-4 md:w-5"
                               src="https://d1nl4izteao6lk.cloudfront.net/uploads/1717587342763_logo%20png_.png"
                               alt=""
                             />
                           </div>
+                          <p className="font-medium text-sm md:text-base text-gray-700">
+                            1 Year Warranty
+                          </p>
                         </div>
-                        <p className="font-medium text-sm md:text-base">
-                          1 Year Warranty
-                        </p>
                       </div>
 
-                      <div className="bg-gray-100 p-3 md:p-4 rounded-lg text-center">
-                        <div className="flex justify-center mb-2">
-                          <div className="h-8 md:h-10 w-8 md:w-10 bg-gray-300 rounded-full flex items-center justify-center">
+                      <div className="bg-white bg-opacity-80 p-3 md:p-4 rounded-lg shadow-sm transition-all duration-300 hover:shadow-md hover:bg-opacity-100">
+                        <div className="flex items-center">
+                          <div className="h-8 md:h-10 w-8 md:w-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                             <img
                               className="h-4 md:h-5 w-4 md:w-5"
                               src="https://d1nl4izteao6lk.cloudfront.net/uploads/1717587342763_logo%20png_.png"
                               alt=""
                             />
                           </div>
+                          <p className="font-medium text-sm md:text-base text-gray-700">
+                            7 Days Replacement
+                          </p>
                         </div>
-                        <p className="font-medium text-sm md:text-base">
-                          7 Days Replacement
-                        </p>
                       </div>
 
-                      <div className="bg-gray-100 p-3 md:p-4 rounded-lg text-center">
-                        <div className="flex justify-center mb-2">
-                          <div className="h-8 md:h-10 w-8 md:w-10 bg-gray-300 rounded-full flex items-center justify-center">
+                      <div className="bg-white bg-opacity-80 p-3 md:p-4 rounded-lg shadow-sm transition-all duration-300 hover:shadow-md hover:bg-opacity-100">
+                        <div className="flex items-center">
+                          <div className="h-8 md:h-10 w-8 md:w-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                             <img
                               className="h-4 md:h-5 w-4 md:w-5"
                               src="https://d1nl4izteao6lk.cloudfront.net/uploads/1717587342763_logo%20png_.png"
                               alt=""
                             />
                           </div>
+                          <p className="font-medium text-sm md:text-base text-gray-700">
+                            Free Shipping
+                          </p>
                         </div>
-                        <p className="font-medium text-sm md:text-base">
-                          Free Shipping
-                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Right side content (login/register) */}
-                <div className="w-full md:w-1/2 p-4 md:p-8 flex flex-col justify-center">
-                  <div className="max-w-md mx-auto w-full">
+                {/* Right side content (login/register) - Full width on small screens */}
+                <div className="w-full md:w-1/2 p-4 mb:p-5 sm:p-6 md:p-8 flex flex-col justify-center bg-white">
+                  {/* Condensed logo and benefits for small screens */}
+                  <div className="md:hidden mb-4 flex flex-col items-center">
+                    <img
+                      className="h-12 mb:h-14 w-auto mb-2 mb:mb-3"
+                      src="https://d1nl4izteao6lk.cloudfront.net/uploads/1717587342763_logo%20png_.png"
+                      alt="Brand Logo"
+                    />
+                    <h2 className="text-base mb:text-lg font-bold mb-3 text-center text-gray-800">
+                      Welcome to boAt!
+                    </h2>
+                    <div className="flex justify-center space-x-2 mb:space-x-3 mb-1">
+                      <div className="bg-blue-50 p-2 rounded-md text-xs mb:text-sm text-center text-gray-700">
+                        1 Year Warranty
+                      </div>
+                      <div className="bg-blue-50 p-2 rounded-md text-xs mb:text-sm text-center text-gray-700">
+                        7 Days Replacement
+                      </div>
+                      <div className="bg-blue-50 p-2 rounded-md text-xs mb:text-sm text-center text-gray-700">
+                        Free Shipping
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="max-w-sm mb:max-w-md mx-auto w-full">
                     {/* Login form */}
                     {isLoginOpen && (
                       <>
-                        <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
+                        <h2 className="text-lg mb:text-xl md:text-2xl font-bold mb-3 mb:mb-4 md:mb-6 text-gray-800">
                           Login
                         </h2>
                         <form
@@ -321,7 +344,8 @@ const Login = () => {
                               required
                               value={loginData.email}
                               onChange={handleLoginChange}
-                              className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                              placeholder="Enter your email"
                             />
                           </div>
                           <div>
@@ -338,12 +362,13 @@ const Login = () => {
                               required
                               value={loginData.password}
                               onChange={handleLoginChange}
-                              className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                              placeholder="Enter your password"
                             />
                           </div>
                           <button
                             type="submit"
-                            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-medium"
+                            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-medium shadow-sm hover:shadow"
                           >
                             Login
                           </button>
@@ -352,7 +377,7 @@ const Login = () => {
                           Don't have an account?{" "}
                           <button
                             onClick={() => toggleForm(true)}
-                            className="text-blue-600 hover:text-blue-800 font-medium"
+                            className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
                           >
                             Register
                           </button>
@@ -363,7 +388,7 @@ const Login = () => {
                     {/* Register form */}
                     {isRegisterOpen && (
                       <>
-                        <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
+                        <h2 className="text-lg mb:text-xl md:text-2xl font-bold mb-3 mb:mb-4 md:mb-6 text-gray-800">
                           Register
                         </h2>
                         <form
@@ -384,7 +409,8 @@ const Login = () => {
                               required
                               value={formData.name}
                               onChange={handleInputChange}
-                              className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                              placeholder="Enter your name"
                             />
                           </div>
                           <div>
@@ -401,7 +427,8 @@ const Login = () => {
                               required
                               value={formData.email}
                               onChange={handleInputChange}
-                              className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                              placeholder="Enter your email"
                             />
                           </div>
                           <div>
@@ -418,12 +445,13 @@ const Login = () => {
                               required
                               value={formData.password}
                               onChange={handleInputChange}
-                              className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                              placeholder="Create a password"
                             />
                           </div>
                           <button
                             type="submit"
-                            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-medium"
+                            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-medium shadow-sm hover:shadow"
                           >
                             Register
                           </button>
@@ -432,7 +460,7 @@ const Login = () => {
                           Already have an account?{" "}
                           <button
                             onClick={() => toggleForm(false)}
-                            className="text-blue-600 hover:text-blue-800 font-medium"
+                            className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
                           >
                             Login
                           </button>

@@ -11,31 +11,30 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
   const { loginStatus } = useContext(AuthContext);
+  const [totalQuan, setTotalQuan] = useState(null);
 
   const toggleCart = () => {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await axios({
-          method: "GET",
-          url: `https://boat-lifestyle-server.onrender.com/api/carts/products`,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        setCartItems(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
-      }
-    };
-
-    if (isOpen) {
-      fetchCartItems();
+  const fetchCartItems = async () => {
+    try {
+      const response = await axios({
+        method: "GET",
+        url: `https://boat-lifestyle-server.onrender.com/api/carts/products`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setCartItems(response.data.products);
+      setTotalQuan(response.data.totalQuantity);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
     }
+  };
+
+  useEffect(() => {
+    fetchCartItems();
   }, [isOpen]);
 
   const removeFromCart = async (itemId) => {
@@ -48,15 +47,7 @@ const Cart = () => {
           },
         }
       );
-      // Refresh cart items after deletion
-      const response = await axios({
-        method: "GET",
-        url: `https://boat-lifestyle-server.onrender.com/api/carts/products`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      setCartItems(response.data);
+      fetchCartItems(); // Refresh cart items after deletion
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }
@@ -75,15 +66,7 @@ const Cart = () => {
           },
         }
       );
-      // Refresh cart items after update
-      const response = await axios({
-        method: "GET",
-        url: `https://boat-lifestyle-server.onrender.com/api/carts/products`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      setCartItems(response.data);
+      fetchCartItems(); // Refresh cart items after update
     } catch (error) {
       console.error("Error updating item quantity:", error);
     }
@@ -131,6 +114,11 @@ const Cart = () => {
           className="w-6 h-6 cursor-pointer"
           onClick={toggleCart}
         />
+        {cartItems.length > 0 && (
+          <span className="absolute -top-3 left-3 inline-flex items-center justify-center px-2 py-1.5 text-xs leading-none text-red-100 bg-red-600 rounded-full">
+            {totalQuan}
+          </span>
+        )}
       </div>
 
       {/* Overlay */}

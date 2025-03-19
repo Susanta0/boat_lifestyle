@@ -152,7 +152,7 @@ const SingleProduct = () => {
   return (
     <>
       <ToastContainer />
-      <div className="mt-14 max-w-6xl mx-auto bg-gray-50 p-4 md:p-6">
+      <div className="mt-28 max-w-6xl mx-auto bg-gray-50 p-4 md:p-6">
         {/* Product Image and Details Section */}
         <div className="flex flex-col md:flex-row mb-8">
           {/* Thumbnails - Visible on md and larger screens */}
