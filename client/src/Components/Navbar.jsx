@@ -6,6 +6,8 @@ import Login from "./NavDetails/Login";
 import Cart from "./NavDetails/Cart";
 import { GiHamburgerMenu } from "react-icons/gi";
 import NavCategories from "./NavDetails/NavCategories";
+import axios from "axios";
+import BoatLogoLoading from "../utils/boatLogoLoading";
 
 const navData = [
   {
@@ -39,6 +41,11 @@ const Navbar = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const hoverTimeoutRef = useRef(null);
   const dropdownRef = useRef(null);
+
+  const [allProducts, setAllProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -93,6 +100,46 @@ const Navbar = () => {
     }
   };
 
+  const fetchProducts = async (query = "") => {
+    try {
+      setLoading(true);
+      const response = await axios({
+        method: "GET",
+        url: "https://boat-lifestyle-server.onrender.com/api/products/search",
+        params: { query },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setAllProducts(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Only fetch products when there is a search term
+    if (searchTerm) {
+      fetchProducts(searchTerm);
+      setShowResults(true);
+    } else {
+      setShowResults(false);
+      setAllProducts([]);
+    }
+  }, [searchTerm]);
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      fetchProducts(searchTerm);
+    }, 1000); // Delay API call by 1000ms for debouncing
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchTerm]);
+
   return (
     <>
       <div className="fixed top-10 left-0 w-full bg-white z-50 shadow-md">
@@ -137,7 +184,7 @@ const Navbar = () => {
                   {item.id === 1 && hoveredItem === 1 && (
                     <div
                       ref={dropdownRef}
-                      className="absolute top-full left-0 w-auto transition-opacity duration-300"
+                      className="absolute top-full left-1/2 transform -translate-x-1/4 w-auto transition-opacity duration-300"
                       onMouseEnter={handleDropdownMouseEnter}
                       onMouseLeave={handleMouseLeave}
                     >
@@ -151,7 +198,54 @@ const Navbar = () => {
 
           {/* Search, Login, Cart Icons */}
           <div className="flex items-center space-x-3 sm:space-x-5">
-            <Search />
+            <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+            {/* Conditional rendering of search results */}
+            {showResults && (
+              <div className="absolute z-50 top-12 left-1/2 transform -translate-x-1/2 w-80 bg-white rounded-lg shadow-lg max-h-96 overflow-y-auto">
+                {loading ? (
+                  <div className="flex justify-center items-center h-20">
+                    <BoatLogoLoading />
+                  </div>
+                ) : (
+                  <div className="p-2">
+                    {allProducts.length > 0 ? (
+                      allProducts.map((product) => (
+                        <div
+                          onClick={() =>
+                            navigate(
+                              `/products/${product.category}/${product._id}`
+                            )
+                          }
+                          key={product._id || product.id}
+                          className="flex items-center border-b border-gray-100 py-2 hover:bg-gray-50"
+                        >
+                          <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded">
+                            <img
+                              src={product.image || "/api/placeholder/48/48"}
+                              alt={product.name}
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
+                          <div className="ml-3 flex-1">
+                            <p className="text-sm font-medium text-gray-800 truncate">
+                              {product.name}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="py-4 text-center">
+                        <p className="text-sm text-gray-500">
+                          No products found
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
             <Login />
             <Cart />
           </div>
