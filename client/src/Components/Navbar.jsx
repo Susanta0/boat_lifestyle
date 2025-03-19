@@ -8,6 +8,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import NavCategories from "./NavDetails/NavCategories";
 import axios from "axios";
 import { BoatLoading } from "./ProductCardSkeleton";
+import SearchResult from "./NavDetails/SearchResult";
 
 const navData = [
   {
@@ -202,7 +203,7 @@ const Navbar = () => {
 
             {/* Conditional rendering of search results */}
             {showResults && (
-              <div className="absolute z-50 top-12 left-1/2 transform -translate-x-1/2 w-80 bg-white rounded-lg shadow-lg max-h-96 overflow-y-auto">
+              <div className="absolute z-50 mb:top-32 xl:top-12 left-1/2 transform -translate-x-1/2 mb:w-64 lg:w-80 bg-white rounded-lg shadow-lg max-h-96 overflow-y-auto overflow-x-hidden">
                 {loading ? (
                   <div className="flex justify-center items-center h-20">
                     <BoatLoading />
@@ -211,28 +212,7 @@ const Navbar = () => {
                   <div className="p-2">
                     {allProducts.length > 0 ? (
                       allProducts.map((product) => (
-                        <div
-                          onClick={() =>
-                            navigate(
-                              `/products/${product.category}/${product._id}`
-                            )
-                          }
-                          key={product._id || product.id}
-                          className="flex items-center border-b border-gray-100 py-2 hover:bg-gray-50"
-                        >
-                          <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded">
-                            <img
-                              src={product.image || "/api/placeholder/48/48"}
-                              alt={product.name}
-                              className="h-full w-full object-cover"
-                            />
-                          </div>
-                          <div className="ml-3 flex-1">
-                            <p className="text-sm font-medium text-gray-800 truncate">
-                              {product.name}
-                            </p>
-                          </div>
-                        </div>
+                        <SearchResult key={product._id} product={product} />
                       ))
                     ) : (
                       <div className="py-4 text-center">

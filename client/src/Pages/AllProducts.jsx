@@ -144,7 +144,7 @@ const AllProducts = () => {
 
   return (
     <>
-      <div className="px-2 mb:px-4 sm:px-6 md:px-10 mt-24">
+      <div className="px-2 mb:px-4 sm:px-6 md:px-10 mt-28">
         <div className="my-4 mb:my-6">
           <h2 className="text-xl mb:text-2xl font-extrabold mb-4">
             All Products

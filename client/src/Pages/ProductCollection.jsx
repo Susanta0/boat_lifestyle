@@ -130,7 +130,7 @@ const ProductCollection = () => {
 
   return (
     <>
-      <div className="mx-2 mb:mx-4 sm:mx-6 md:mx-10 mt-24">
+      <div className="mx-2 mb:mx-4 sm:mx-6 md:mx-10 mt-28">
         <h2 className="text-xl mb:text-2xl font-extrabold">{category}</h2>
         <div className="flex flex-col mb:flex-row justify-between items-start mb:items-center mt-4">
           <div className="relative mb-4 mb:mb-0 w-full mb:w-auto">
