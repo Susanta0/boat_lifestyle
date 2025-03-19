@@ -65,7 +65,7 @@ const cartControllers = {
         })
       );
 
-      res.json(products);
+      res.json({ products, totalQuantity: cart.totalQuantity }); // Include totalQuantity in the response
     } catch (error) {
       res.status(500).json({ message: "Server error", error: error.message });
     }
@@ -173,8 +173,12 @@ const cartControllers = {
       }
 
       const basePrice = product.price / product.quantity; // Calculate base price from current price and quantity
+      const quantityDifference = quantity - product.quantity; // Calculate the difference in quantity
       product.quantity = quantity;
       product.price = basePrice * quantity;
+
+      // Update total quantity of products in the cart
+      cart.totalQuantity += quantityDifference;
 
       await cart.save();
       res.status(200).json({ message: "Product quantity updated" });
