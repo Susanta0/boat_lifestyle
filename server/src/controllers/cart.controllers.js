@@ -145,6 +145,12 @@ const cartControllers = {
         (product) => product.productId.toString() !== productId
       );
 
+      // Recalculate total quantity of products in the cart
+      cart.totalQuantity = cart.products.reduce(
+        (total, product) => total + product.quantity,
+        0
+      );
+
       await cart.save();
       res.status(200).json({ message: "Product removed from cart" });
     } catch (error) {
