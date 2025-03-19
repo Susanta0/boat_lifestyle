@@ -6,7 +6,7 @@ import { BoatLoading } from "../Components/ProductCardSkeleton";
 import { AuthContext } from "../Context/AuthContextProvider";
 import { ToastContainer, toast } from "react-toastify";
 import Blogs from "../Components/Blogs";
-import SocialMedia from "../Components/Footer/socialMedia";
+import SocialMedia from "../Components/Footer/SocialMedia";
 
 const SingleProduct = () => {
   const { category, id } = useParams();

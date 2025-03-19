@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { BoatLoading } from "../Components/ProductCardSkeleton";
 import ProductCard from "../Components/CategoriesProductCard/ProductCard";
-import SocialMedia from "../Components/Footer/socialMedia";
+import SocialMedia from "../Components/Footer/SocialMedia";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);

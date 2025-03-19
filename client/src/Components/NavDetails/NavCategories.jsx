@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { categoriesImages } from "../../utils/categoriesImages";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import BoatLogoLoading from "../../utils/boatLogoLoading";
+import { BoatLoading } from "../ProductCardSkeleton";
 
 const NavCategories = ({ isMobile = false }) => {
   const [categoriesData, setCategoriesData] = useState([]);
@@ -42,7 +42,7 @@ const NavCategories = ({ isMobile = false }) => {
     return (
       <div className="bg-gray-50 rounded-md p-2">
         {loading ? (
-          <div className="p-4 text-center">Loading categories...</div>
+          <BoatLoading />
         ) : (
           <div className="grid grid-cols-2 gap-2">
             {categoriesData.map((categoryName, ind) => (
@@ -74,7 +74,7 @@ const NavCategories = ({ isMobile = false }) => {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 p-4">
         {loading ? (
           <div className="col-span-full p-4 text-center">
-            <BoatLogoLoading />
+            <BoatLoading />
           </div>
         ) : (
           categoriesData.map((categoryName, ind) => (
