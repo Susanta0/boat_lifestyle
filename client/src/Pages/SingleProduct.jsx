@@ -95,17 +95,17 @@ const SingleProduct = () => {
   };
 
   const addToCart = async () => {
-    if (!loginStatus.token) {
-      toast("Please log in to add items to the cart.");
-      return;
-    }
+    // if (!loginStatus.token) {
+    //   toast("Please log in to add items to the cart.");
+    //   return;
+    // }
     try {
       const response = await axios({
         method: "POST",
         url: `https://boat-lifestyle-server.onrender.com/api/carts`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${loginStatus.token}`,
+          // Authorization: `Bearer ${loginStatus.token}`,
         },
         data: {
           products: [

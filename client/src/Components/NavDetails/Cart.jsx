@@ -2,14 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoCloseOutline } from "react-icons/io5";
 import axios from "axios";
-import { AuthContext } from "../../Context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { AuthContext } from "../../Context/AuthContextProvider";
 
 const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const { loginStatus } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { loginStatus } = useContext(AuthContext);
 
   const toggleCart = () => {
     setIsOpen(!isOpen);
@@ -23,7 +24,6 @@ const Cart = () => {
           url: `https://boat-lifestyle-server.onrender.com/api/carts/products`,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${loginStatus.token}`,
           },
         });
         setCartItems(response.data);
@@ -45,7 +45,6 @@ const Cart = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${loginStatus.token}`,
           },
         }
       );
@@ -55,7 +54,6 @@ const Cart = () => {
         url: `https://boat-lifestyle-server.onrender.com/api/carts/products`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${loginStatus.token}`,
         },
       });
       setCartItems(response.data);
@@ -74,7 +72,6 @@ const Cart = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${loginStatus.token}`,
           },
         }
       );
@@ -84,7 +81,6 @@ const Cart = () => {
         url: `https://boat-lifestyle-server.onrender.com/api/carts/products`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${loginStatus.token}`,
         },
       });
       setCartItems(response.data);
@@ -107,9 +103,18 @@ const Cart = () => {
     return cartItems.reduce((total, item) => total + item.price, 0);
   };
 
-  const navigateToAddress = () => {
-    navigate("/address");
-    toggleCart();
+  const buyNow = async () => {
+    if (!loginStatus.token) {
+      toast("Please log in to proceed with the purchase.");
+      toggleCart();
+      return;
+    }
+    try {
+      navigate("/address");
+      toggleCart();
+    } catch (error) {
+      console.error("Error during buy now process:", error);
+    }
   };
 
   const navigateToHome = () => {
@@ -119,6 +124,7 @@ const Cart = () => {
 
   return (
     <>
+      <ToastContainer />
       {/* Cart Icon */}
       <div className="relative">
         <HiOutlineShoppingBag
@@ -363,7 +369,7 @@ const Cart = () => {
                   </span>
                 </div>
                 <button
-                  onClick={navigateToAddress}
+                  onClick={buyNow}
                   className="bg-gray-800 hover:bg-black text-white font-medium w-full sm:w-auto py-2 sm:py-3 px-4 sm:px-6 rounded-md transition-colors duration-200"
                 >
                   Pay Now
