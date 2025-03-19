@@ -19,7 +19,6 @@ const Categories = () => {
           url: "https://boat-lifestyle-server.onrender.com/api/products/categories",
         });
         setCategoriesData(response.data);
-        console.log(response);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -68,7 +67,7 @@ const Categories = () => {
                 alt={categoryName}
                 className="h-[82px] w-[82px]"
               />
-              <p className="font-extrabold text-sm text-center">
+              <p className="font-extrabold text-xs sm:text-sm text-center">
                 {categoryName}
               </p>
             </div>

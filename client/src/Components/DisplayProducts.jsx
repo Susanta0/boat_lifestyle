@@ -15,7 +15,6 @@ const DisplayProducts = () => {
           method: "GET",
           url: "https://boat-lifestyle-server.onrender.com/api/products/all",
         });
-        console.log(response);
         setProductsData(response.data.slice(0, 6)); // Limit to 6 products
         setLoading(false);
       } catch (error) {

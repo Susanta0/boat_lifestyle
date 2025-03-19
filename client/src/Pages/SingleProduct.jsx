@@ -27,7 +27,6 @@ const SingleProduct = () => {
           url: `https://boat-lifestyle-server.onrender.com/api/products/category/${category}/${id}`,
         });
         setProduct(response.data);
-        console.log(response.data);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -123,7 +122,6 @@ const SingleProduct = () => {
           ],
         },
       });
-      console.log("Product added to cart:", response.data);
     } catch (error) {
       toast("Error adding product to cart.");
       console.error("Error adding product to cart:", error);

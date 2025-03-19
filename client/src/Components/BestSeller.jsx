@@ -19,7 +19,6 @@ const BestSeller = () => {
           url: "https://boat-lifestyle-server.onrender.com/api/products/categories",
         });
         setCategoriesData(response.data);
-        console.log(response);
         setLoading(false);
       } catch (error) {
         console.error(error);

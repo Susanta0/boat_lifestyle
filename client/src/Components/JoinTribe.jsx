@@ -17,7 +17,6 @@ const JoinTribe = () => {
         const response = await axios.get(
           "https://boat-lifestyle-server.onrender.com/api/products/all"
         );
-        console.log(response.data);
         setProducts(response.data);
         setLoading(false);
       } catch (error) {

@@ -70,7 +70,7 @@ const NavCategories = ({ isMobile = false }) => {
 
   // Desktop version with smooth animation
   return (
-    <div className="absolute top-full left-0 mt-6 w-screen max-w-3xl bg-white text-gray-800 rounded-md shadow-lg z-50 opacity-100 transition-opacity duration-300">
+    <div className="absolute top-full left-1/2 transform -translate-x-1/4  mt-6 w-screen max-w-3xl bg-white text-gray-800 rounded-md shadow-lg z-50 opacity-100 transition-opacity duration-300">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 p-4">
         {loading ? (
           <div className="col-span-full p-4 text-center">
