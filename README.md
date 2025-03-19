@@ -315,7 +315,7 @@ npm install
 
 ### Contact
 
-For any inquiries, please contact us at [your-email@example.com](mailto:susanta721467@gmail.com).
+For any inquiries, please contact us at [susanta721467@gmail.com](mailto:susanta721467@gmail.com).
 
 ### Additional Information
 
