@@ -57,6 +57,10 @@ const cartSchema = new Schema(
         },
       },
     ],
+    totalQuantity: {
+      type: Number,
+      default: 0,
+    },
   },
   { versionKey: false, timestamps: true }
 );
