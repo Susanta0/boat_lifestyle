@@ -2,10 +2,10 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContextProvider";
-import BoatLogoLoading from "../utils/boatLogoLoading";
 import { FaArrowLeft } from "react-icons/fa";
 import NoOrders from "../utils/NoOrders";
-import SocialMedia from "../Components/Footer/socialMedia";
+import SocialMedia from "../Components/Footer/SocialMedia";
+import { BoatLoading } from "../Components/ProductCardSkeleton";
 
 const OrderDetails = () => {
   const [orderDetails, setOrderDetails] = useState([]);
@@ -42,7 +42,7 @@ const OrderDetails = () => {
   };
 
   if (loading) {
-    return <BoatLogoLoading />;
+    return <BoatLoading />;
   }
 
   if (!orderDetails.length) {

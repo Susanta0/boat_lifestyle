@@ -7,7 +7,7 @@ import Cart from "./NavDetails/Cart";
 import { GiHamburgerMenu } from "react-icons/gi";
 import NavCategories from "./NavDetails/NavCategories";
 import axios from "axios";
-import BoatLogoLoading from "../utils/boatLogoLoading";
+import { BoatLoading } from "./ProductCardSkeleton";
 
 const navData = [
   {
@@ -205,7 +205,7 @@ const Navbar = () => {
               <div className="absolute z-50 top-12 left-1/2 transform -translate-x-1/2 w-80 bg-white rounded-lg shadow-lg max-h-96 overflow-y-auto">
                 {loading ? (
                   <div className="flex justify-center items-center h-20">
-                    <BoatLogoLoading />
+                    <BoatLoading />
                   </div>
                 ) : (
                   <div className="p-2">

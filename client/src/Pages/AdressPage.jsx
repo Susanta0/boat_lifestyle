@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContextProvider";
-import SocialMedia from "../Components/Footer/socialMedia";
+import SocialMedia from "../Components/Footer/SocialMedia";
 
 const AdressPage = () => {
   const [address, setAddress] = useState({

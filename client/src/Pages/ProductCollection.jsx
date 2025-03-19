@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductCard from "../Components/CategoriesProductCard/ProductCard";
 import { ItemsCardSkeleton } from "../Components/ProductCardSkeleton";
-import SocialMedia from "../Components/Footer/socialMedia";
+import SocialMedia from "../Components/Footer/SocialMedia";
 
 const ProductCollection = () => {
   const { category } = useParams();
