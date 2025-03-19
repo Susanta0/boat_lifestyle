@@ -117,6 +117,12 @@ const cartControllers = {
         });
       }
 
+      // Calculate total quantity of products
+      cart.totalQuantity = cart.products.reduce(
+        (total, product) => total + product.quantity,
+        0
+      );
+
       await cart.save();
       res.status(201).json(cart);
     } catch (error) {
