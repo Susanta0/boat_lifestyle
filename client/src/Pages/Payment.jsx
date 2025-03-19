@@ -8,7 +8,7 @@ const Payment = () => {
   const { loginStatus } = useContext(AuthContext);
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
-  const apiKey = process.env.REACT_APP_API_KEY;
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchCartItems = async () => {

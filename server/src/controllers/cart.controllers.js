@@ -43,7 +43,7 @@ const categoryToModelMap = {
 const cartControllers = {
   getAllProductsInCart: async (req, res) => {
     try {
-      const user = req.user._id; // Get authenticated user ID from request
+      const user = req.user ? req.user._id : null; // Get authenticated user ID from request if available
       const cart = await Cart.findOne({ user });
 
       if (!cart) {
@@ -74,7 +74,7 @@ const cartControllers = {
   addCart: async (req, res) => {
     try {
       const { products } = req.body;
-      const user = req.user._id; // Get authenticated user ID from request
+      const user = req.user ? req.user._id : null; // Get authenticated user ID from request if available
 
       if (!products || !Array.isArray(products) || products.length === 0) {
         return res.status(400).json({ message: "Products are required" });
@@ -126,7 +126,7 @@ const cartControllers = {
 
   removeProductFromCart: async (req, res) => {
     try {
-      const user = req.user._id;
+      const user = req.user ? req.user._id : null; // Get authenticated user ID from request if available
       const { productId } = req.params;
 
       let cart = await Cart.findOne({ user });
@@ -148,7 +148,7 @@ const cartControllers = {
 
   updateProductQuantityInCart: async (req, res) => {
     try {
-      const user = req.user._id;
+      const user = req.user ? req.user._id : null; // Get authenticated user ID from request if available
       const { productId } = req.params;
       const { quantity, price } = req.body;
 
@@ -179,7 +179,7 @@ const cartControllers = {
 
   clearCart: async (req, res) => {
     try {
-      const user = req.user._id;
+      const user = req.user ? req.user._id : null; // Get authenticated user ID from request if available
       let cart = await Cart.findOne({ user });
 
       if (!cart) {
