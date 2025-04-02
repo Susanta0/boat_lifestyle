@@ -4,6 +4,11 @@
 
 This project is a web application built using the MERN stack (MongoDB, Express.js, React.js, Node.js). It is designed to manage and showcase boat lifestyle products.
 
+### Deployment Links
+
+- [Client Deployment](https://boat-lifestyle-chi.vercel.app/)
+- [CMS Deployment](https://boatcms.vercel.app/)
+
 ## Tech Stack
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
@@ -307,11 +312,6 @@ npm install
    cd ../server
    npm start
    ```
-
-### Deployment Links
-
-- [Client Deployment](https://boat-lifestyle-chi.vercel.app/)
-- [CMS Deployment](https://boatcms.vercel.app/)
 
 ### Contact
 
