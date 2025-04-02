@@ -321,3 +321,9 @@ For any inquiries, please contact us at [susanta721467@gmail.com](mailto:susanta
 
 - Ensure MongoDB is running on your local machine or configure the connection string in `client/.env` and `server/.env`.
 - For any issues or contributions, please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+## 🌟 Thank You for Visiting!
+
+We hope you enjoy exploring and using the **Canva Project**. Your feedback and suggestions are always welcome! If you find this project helpful or inspiring, don't forget to give it a ⭐ on [GitHub](https://github.com/Susanta0/boat_lifestyle).
+
+Happy Coding! 🚀
