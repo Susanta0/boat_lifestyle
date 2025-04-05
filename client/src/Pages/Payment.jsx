@@ -22,9 +22,10 @@ const Payment = () => {
             },
           }
         );
-        const cartItems = response.data;
-        setCartItems(cartItems);
-        const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+        // The API returns an object with 'products' and 'totalQuantity' properties
+        const cartItemsData = response.data.products || [];
+        setCartItems(cartItemsData);
+        const total = cartItemsData.reduce((sum, item) => sum + item.price, 0);
         setTotalAmount(total);
       } catch (error) {
         console.error("Error fetching cart items:", error);
@@ -69,7 +70,7 @@ const Payment = () => {
             await axios.post(
               "https://boat-lifestyle-server.onrender.com/api/orders",
               {
-                products: cartItems,
+                products: cartItems, // This is now correctly an array of products
                 totalAmount,
                 order_id, // Include order_id
               },
